@@ -320,6 +320,14 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
 .rate-row .rate-input:focus{border-color:var(--pink-4);background:var(--white);}
 .rate-row .fixed{font-size:13px;font-weight:700;color:var(--text-3);padding:8px 12px;font-variant-numeric:tabular-nums;}
 
+.currency-settings-row{display:flex;align-items:center;gap:10px;background:var(--white);border-radius:14px;padding:12px 14px;border:1.5px dashed var(--pink-4);}
+.currency-settings-row.main-row{background:linear-gradient(135deg,#FFF6FA,#FFE9F1);border-style:solid;}
+.currency-settings-row .flag{font-size:22px;flex-shrink:0;line-height:1;}
+.currency-settings-row .name{flex:1;font-size:13px;font-weight:700;color:var(--text-1);}
+.currency-settings-row .name small{font-size:10px;color:var(--text-3);font-weight:600;margin-left:4px;}
+.currency-settings-row .main-badge{font-size:10px;color:#7A3A55;background:linear-gradient(135deg,#FFE9F1,#FFD4E3);padding:3px 8px;border-radius:100px;font-weight:700;letter-spacing:0.3px;}
+.currency-settings-row .code{font-size:12px;color:var(--text-3);font-weight:700;letter-spacing:0.5px;}
+
 .goal-input-row{display:flex;align-items:center;gap:10px;background:var(--white);border-radius:16px;padding:14px 18px;box-shadow:var(--shadow-sm);border:2px dashed var(--pink-4);margin-bottom:12px;}
 .goal-input-row .icon{font-size:18px;flex-shrink:0;}
 .goal-input-row .prefix{font-size:20px;color:var(--pink-6);font-weight:700;flex-shrink:0;}
@@ -888,6 +896,8 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
 
 var STORAGE_KEY = 'mycost-v6';
 var CLOUD_CFG_KEY = 'mycost-cloud-v1';
+var LOCAL_CHANGE_KEY = 'mycost-last';
+var SYNC_TIME_KEY = 'mycost-last-sync';
 
 var CATEGORIES = {
   expense: [
@@ -963,6 +973,8 @@ function saveState(){
       skin: state.skin,
       goalCurrency: state.goalCurrency
     }));
+    // ★ FIX Bug 1：把本地改动时间挪到这里，不依赖 beforeunload
+    localStorage.setItem(LOCAL_CHANGE_KEY, String(Date.now()));
     if(typeof scheduleCloudSync === 'function') scheduleCloudSync();
   }catch(e){
     console.error('保存失败', e);
@@ -2334,8 +2346,8 @@ document.querySelectorAll('#settingsPanel .settings-item').forEach(function(item
   item.addEventListener('click', function(){
     var act = item.dataset.act;
     if(act === 'cloud'){ closeSettings(); setTimeout(function(){ document.getElementById('cloudModal').classList.add('open'); var cfg = getCloudConfig(); document.getElementById('binIdInput').value = cfg.binId || ''; document.getElementById('binKeyInput').value = cfg.binKey || ''; setCloudStatus(cfg.binId ? '☁️ 已开启' : '未开启云同步', cfg.binId ? 'var(--green-soft)' : 'var(--text-3)'); }, 240); }
-    else if(act === 'currency'){ openCurrencyPicker(); }
-    else if(act === 'rates'){ openRatesModal(); }
+    else if(act === 'currency'){ closeSettings(); setTimeout(function(){ openCurrencyPicker(); }, 240); }
+    else if(act === 'rates'){ closeSettings(); setTimeout(function(){ openRatesModal(); }, 240); }
     else if(act === 'periodic'){ closeSettings(); setTimeout(function(){ openPeriodicModal(); }, 240); }
     else if(act === 'bill'){ closeSettings(); setTimeout(function(){ openBillImportModal(); }, 240); }
     else if(act === 'backup'){ closeSettings(); setTimeout(function(){ document.getElementById('backupModal').classList.add('open'); }, 240); }
@@ -2374,16 +2386,16 @@ function openCurrencyPicker(){
       (state.currencies.main === code ? '<span class="main-badge">当前</span>' : '') +
       '<span class="code">' + info.symbol + '</span>';
     row.style.cursor = 'pointer';
-    row.style.display = 'flex';
-    row.style.alignItems = 'center';
-    row.style.gap = '10px';
-    row.style.background = state.currencies.main === code ? 'linear-gradient(135deg,#FFF6FA,#FFE9F1)' : 'var(--white)';
-    row.style.borderRadius = '14px';
-    row.style.padding = '12px 14px';
-    row.style.boxShadow = 'var(--shadow-sm)';
-    row.style.border = '1.5px dashed var(--pink-4)';
     row.onclick = function(){
+      if(state.currencies.main === code) return;
+      // ★ FIX Bug 3：切换主币种前提示
+      var info2 = getCurrencyInfo(code);
+      var oldInfo = getCurrencyInfo(state.currencies.main);
+      if(!confirm('切换主币种为 ' + code + ' 后，所有历史统计都会以 ' + info2.symbol + ' 展示。\n\n确定切换吗？')){
+        return;
+      }
       state.currencies.main = code;
+      state.goalCurrency = code;
       saveState();
       renderHeader(); render();
       openCurrencyPicker();
@@ -2587,6 +2599,8 @@ function pushToCloud(silent){
     body: JSON.stringify(payload)
   }).then(function(res){
     if(!res.ok){ setCloudStatus('云同步失败','#E57373'); if(!silent) showToast('云同步失败'); cloudSyncing=false; return false; }
+    // ★ FIX Bug 1 & 2：推送成功后记录同步时间
+    localStorage.setItem(SYNC_TIME_KEY, String(Date.now()));
     var now = new Date(), t = pad2(now.getHours())+':'+pad2(now.getMinutes());
     setCloudStatus('☁️ 已同步 '+t, 'var(--green-soft)'); cloudSyncing = false; renderHeader(); return true;
   }).catch(function(err){
@@ -2618,6 +2632,8 @@ function pullFromCloud(){
       if(record.goalCurrency) state.goalCurrency = record.goalCurrency;
       state.transactions.forEach(function(t){ if(!t.currency) t.currency = state.currencies.main; });
       saveState(); applySkin(); applyAvatar(); render();
+      // ★ 拉取成功也记录同步时间
+      localStorage.setItem(SYNC_TIME_KEY, String(Date.now()));
       var now = new Date(), t = pad2(now.getHours())+':'+pad2(now.getMinutes());
       setCloudStatus('☁️ 已恢复 '+count+' 条 · '+t, 'var(--green-soft)');
       showToast('已从云端恢复 '+count+' 条记录 ✅');
@@ -2657,22 +2673,35 @@ applyAvatar();
 checkPeriodicBills();
 render();
 
+// ★ FIX Bug 1 & Bug 2：重写启动时的云同步逻辑
 (function initCloud(){
   var cfg = getCloudConfig();
   if(!cfg.binId || !cfg.binKey) return;
   setCloudStatus('☁️ 已开启','var(--green-soft)');
+
+  var lastLocal = parseInt(localStorage.getItem(LOCAL_CHANGE_KEY) || '0', 10);
+  var lastSync = parseInt(localStorage.getItem(SYNC_TIME_KEY) || '0', 10);
+
   setTimeout(function(){
     fetch('https://api.jsonbin.io/v3/b/'+cfg.binId+'/latest', {headers:{'X-Master-Key':cfg.binKey}})
       .then(function(res){ return res.ok ? res.json() : null; })
       .then(function(data){
         if(!data || !data.record) return;
         var remote = data.record;
-        if(!remote.transactions) return;
+        if(!remote.transactions || !Array.isArray(remote.transactions)) return;
         var remoteCount = remote.transactions.length;
         var remoteTime = remote.updatedAt ? new Date(remote.updatedAt).getTime() : 0;
-        var localTime = parseInt(localStorage.getItem('mycost-last')||'0',10);
-        if(remoteTime > localTime && remoteCount > 0){
-          if(confirm('云端有 '+remoteCount+' 条记录（比本地新），是否用云端覆盖本地？')){
+
+        // 情况 1：从未同步过（首次配置云同步）→ 静默用本地覆盖云端
+        if(!lastSync){
+          pushToCloud(true);
+          return;
+        }
+
+        // 情况 2：云端明显比本地最后同步时间新（>30 秒），说明有别的设备改动过
+        if(remoteTime > lastSync + 30000 && remoteCount > 0){
+          var remoteTimeStr = new Date(remoteTime).toLocaleString('zh-CN', {month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit'});
+          if(confirm('检测到云端有 ' + remoteCount + ' 条记录（最后更新：' + remoteTimeStr + '），比本地新。\n\n点「确定」用云端覆盖本地\n点「取消」用本地覆盖云端')){
             state.transactions = remote.transactions;
             if(remote.savingGoal) state.savingGoal = remote.savingGoal;
             if(remote.budgets) state.budgets = remote.budgets;
@@ -2683,15 +2712,33 @@ render();
             if(remote.goalCurrency) state.goalCurrency = remote.goalCurrency;
             state.transactions.forEach(function(t){ if(!t.currency) t.currency = state.currencies.main; });
             saveState(); applySkin(); applyAvatar(); render();
-            showToast('已同步云端数据 ✅');
+            localStorage.setItem(SYNC_TIME_KEY, String(Date.now()));
+            showToast('已从云端恢复 ✅');
+          } else {
+            pushToCloud(true);
           }
+          return;
         }
-      }).catch(function(err){ console.error('自动拉取失败',err); });
-  },1000);
+
+        // 情况 3：本地有未推送的改动 → 推上去
+        if(lastLocal > lastSync){
+          pushToCloud(true);
+        }
+        // 情况 4：什么都没变 → 什么都不做
+      }).catch(function(err){ console.error('自动拉取失败', err); });
+  }, 1000);
 })();
 
-window.addEventListener('beforeunload',function(){
-  localStorage.setItem('mycost-last', String(Date.now()));
+// ★ FIX Bug 2：每次切回 App 时，如果本地有未同步改动就自动推送
+document.addEventListener('visibilitychange', function(){
+  if(document.hidden) return;
+  var cfg = getCloudConfig();
+  if(!cfg.binId || !cfg.binKey) return;
+  var lastLocal = parseInt(localStorage.getItem(LOCAL_CHANGE_KEY) || '0', 10);
+  var lastSync = parseInt(localStorage.getItem(SYNC_TIME_KEY) || '0', 10);
+  if(lastLocal > lastSync){
+    pushToCloud(true);
+  }
 });
 
 })();
