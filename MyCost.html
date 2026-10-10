@@ -467,7 +467,7 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
   <div class="app-fixed-top" id="fixedTop">
     <div class="search-header" id="searchHeaderRow">
       <button class="search-back" id="searchBackBtn">‹ 返回</button>
-      <div class="search-title">🟟 搜索账单</div>
+      <div class="search-title">🔍 搜索账单</div>
       <button class="search-select-btn" id="searchSelectBtn">选择</button>
     </div>
 
@@ -476,7 +476,7 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
         <div class="savings-label">
           <div class="left">
             <div class="avatar-btn" id="avatarBtn" title="点击打开设置">
-              <span id="avatarEmoji">🟟</span>
+              <span id="avatarEmoji">🐰</span>
               <img id="avatarImg" style="display:none;" alt="">
             </div>
             <span>我的小金库</span>
@@ -518,7 +518,7 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
   <div class="main" id="mainArea"></div>
 </div>
 
-<button class="fab-search" id="fabSearch" type="button">🟟</button>
+<button class="fab-search" id="fabSearch" type="button">🔍</button>
 <button class="fab" id="fabAdd">+</button>
 
 <div class="settings-panel" id="settingsPanel">
@@ -531,7 +531,7 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
     <div class="settings-scroll">
       <div class="settings-user-card" id="settingsAvatarCard">
         <div class="settings-avatar-big" id="settingsAvatarBig">
-          <span id="settingsAvatarEmoji">🟟</span>
+          <span id="settingsAvatarEmoji">🐰</span>
           <img id="settingsAvatarImg" style="display:none;" alt="">
         </div>
         <div class="settings-user-info">
@@ -550,13 +550,13 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
             <span class="si-chev">›</span>
           </div>
           <div class="settings-item" data-act="currency">
-            <span class="si-icon">🟟</span>
+            <span class="si-icon">💱</span>
             <span class="si-label">默认币种</span>
             <span class="si-val" id="settingsCurrencyVal">CNY</span>
             <span class="si-chev">›</span>
           </div>
           <div class="settings-item" data-act="rates">
-            <span class="si-icon">🟟</span>
+            <span class="si-icon">💹</span>
             <span class="si-label">汇率设置</span>
             <span class="si-chev">›</span>
           </div>
@@ -567,18 +567,18 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
         <div class="settings-group-title">数据</div>
         <div class="settings-list">
           <div class="settings-item" data-act="periodic">
-            <span class="si-icon">🟟</span>
+            <span class="si-icon">🔄</span>
             <span class="si-label">周期账单</span>
             <span class="si-val" id="settingsPeriodicCount">0 条</span>
             <span class="si-chev">›</span>
           </div>
           <div class="settings-item" data-act="bill">
-            <span class="si-icon">🟟</span>
+            <span class="si-icon">📊</span>
             <span class="si-label">账单导入</span>
             <span class="si-chev">›</span>
           </div>
           <div class="settings-item" data-act="backup">
-            <span class="si-icon">🟟</span>
+            <span class="si-icon">📤</span>
             <span class="si-label">备份</span>
             <span class="si-chev">›</span>
           </div>
@@ -589,7 +589,7 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
         <div class="settings-group-title">外观</div>
         <div class="settings-list">
           <div class="settings-item" data-act="skin">
-            <span class="si-icon">🟟</span>
+            <span class="si-icon">🎨</span>
             <span class="si-label">皮肤</span>
             <span class="si-val" id="settingsSkinStatus">默认</span>
             <span class="si-chev">›</span>
@@ -621,7 +621,7 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
     <div class="modal-handle"></div>
     <div class="modal-title">✎ 设置存钱目标</div>
     <div class="goal-field-label">目标名称</div>
-    <div class="goal-input-row"><span class="icon">🟟</span><input type="text" id="goalNameInput" class="left-align" placeholder="例如：去旅行 / 买相机" maxlength="20"></div>
+    <div class="goal-input-row"><span class="icon">🎯</span><input type="text" id="goalNameInput" class="left-align" placeholder="例如：去旅行 / 买相机" maxlength="20"></div>
     <div class="goal-field-label">目标金额</div>
     <div class="goal-input-row"><span class="prefix" id="goalPrefix">¥</span><input type="text" id="goalAmountInput" inputmode="decimal" placeholder="0"></div>
     <div class="modal-actions">
@@ -650,7 +650,7 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
 <div class="modal" id="periodicModal">
   <div class="modal-content">
     <div class="modal-handle"></div>
-    <div class="modal-title">🟟 周期账单</div>
+    <div class="modal-title">🔄 周期账单</div>
     <div id="periodicListWrap"></div>
   </div>
 </div>
@@ -664,7 +664,7 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
       <button class="type-tab income" id="peTypeIncome">收入</button>
     </div>
     <div class="goal-field-label">名称</div>
-    <div class="editor-row"><span class="icon">🟟️</span><input type="text" id="peName" class="left" placeholder="例如：房租 / 工资" maxlength="20"></div>
+    <div class="editor-row"><span class="icon">🏷️</span><input type="text" id="peName" class="left" placeholder="例如：房租 / 工资" maxlength="20"></div>
     <div class="goal-field-label">金额</div>
     <div class="editor-row"><span class="prefix" id="pePrefix">¥</span><input type="text" id="peAmount" inputmode="decimal" placeholder="0"><select id="peCurrency" style="flex:0 0 auto;width:80px;text-align:right;font-size:13px;font-weight:700;color:#7A3A55;padding:4px 6px;background:var(--pink-2);border-radius:8px;"></select></div>
     <div class="goal-field-label">分类</div>
@@ -695,7 +695,7 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
 <div class="modal" id="billImportModal">
   <div class="modal-content">
     <div class="modal-handle"></div>
-    <div class="modal-title">🟟 账单导入</div>
+    <div class="modal-title">📊 账单导入</div>
     <div id="billImportContent"></div>
   </div>
 </div>
@@ -703,7 +703,7 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
 <div class="modal" id="backupModal">
   <div class="modal-content" style="max-width:400px;">
     <div class="modal-handle"></div>
-    <div class="modal-title">🟟 数据备份</div>
+    <div class="modal-title">📤 数据备份</div>
     <div class="bill-guide">
       <div class="h">导出备份</div>
       <div class="step">把当前所有数据（交易 / 预算 / 周期账单 / 存钱目标 / 币种 / 皮肤 / 头像）打包成 JSON 文件，保存到 iCloud 或微信收藏。可以存多份（比如每月一份）。</div>
@@ -711,8 +711,8 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
       <div class="step">选择之前导出的 JSON 文件，完整恢复数据。<b>会覆盖当前所有数据。</b></div>
     </div>
     <div class="modal-actions" style="margin-top:4px;">
-      <button class="btn btn-secondary" id="backupExportBtn">🟟 导出</button>
-      <button class="btn btn-primary" id="backupImportBtn">🟟 导入</button>
+      <button class="btn btn-secondary" id="backupExportBtn">📤 导出</button>
+      <button class="btn btn-primary" id="backupImportBtn">📥 导入</button>
     </div>
     <div class="modal-actions" style="margin-top:10px;">
       <button class="btn btn-secondary" id="backupCloseBtn" style="flex:1;">关闭</button>
@@ -723,9 +723,9 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
 <div class="modal" id="skinModal">
   <div class="modal-content">
     <div class="modal-handle"></div>
-    <div class="modal-title">🟟 皮肤设置</div>
+    <div class="modal-title">🎨 皮肤设置</div>
     <div class="skin-section">
-      <div class="skin-title">🟟 储蓄卡背景</div>
+      <div class="skin-title">💳 储蓄卡背景</div>
       <div class="skin-preview" id="cardBgPreview">点击下方按钮上传</div>
       <div class="skin-btns">
         <button class="skin-btn upload" id="cardBgUpload">上传图片</button>
@@ -733,7 +733,7 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
       </div>
     </div>
     <div class="skin-section">
-      <div class="skin-title">🟟️ 页面背景</div>
+      <div class="skin-title">🖼️ 页面背景</div>
       <div class="skin-preview" id="pageBgPreview">点击下方按钮上传</div>
       <div class="skin-btns">
         <button class="skin-btn upload" id="pageBgUpload">上传图片</button>
@@ -754,7 +754,7 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
 <div class="modal" id="currencyPickerModal">
   <div class="modal-content" style="max-width:400px;">
     <div class="modal-handle"></div>
-    <div class="modal-title">🟟 默认币种</div>
+    <div class="modal-title">💱 默认币种</div>
     <div style="font-size:11px;color:var(--text-3);padding:0 4px 14px;line-height:1.6;">主币种用于统一展示所有统计。切换后，非主币种交易会自动折算。</div>
     <div id="currencyPickerList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;"></div>
     <div class="modal-actions">
@@ -766,7 +766,7 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
 <div class="modal" id="ratesModal">
   <div class="modal-content" style="max-width:440px;">
     <div class="modal-handle"></div>
-    <div class="modal-title">🟟 汇率设置</div>
+    <div class="modal-title">💹 汇率设置</div>
     <div style="font-size:11px;color:var(--text-3);padding:0 4px 14px;line-height:1.6;">填写「1 单位外币 = X 人民币」的汇率。例如：USD 填 7.2，表示 1 美元 = 7.2 元。改完后所有折算立刻生效。</div>
     <div id="ratesList"></div>
     <div class="modal-actions">
@@ -781,9 +781,9 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
     <div class="modal-handle"></div>
     <div class="modal-title">☁️ 云同步设置</div>
     <div class="goal-field-label">Bin ID</div>
-    <div class="goal-input-row"><span class="icon">🟟</span><input type="text" id="binIdInput" class="left-align" placeholder="从 jsonbin.io 获取"></div>
+    <div class="goal-input-row"><span class="icon">📦</span><input type="text" id="binIdInput" class="left-align" placeholder="从 jsonbin.io 获取"></div>
     <div class="goal-field-label">X-Master-Key</div>
-    <div class="goal-input-row"><span class="icon">🟟</span><input type="text" id="binKeyInput" class="left-align" placeholder="$2a$10$..."></div>
+    <div class="goal-input-row"><span class="icon">🔑</span><input type="text" id="binKeyInput" class="left-align" placeholder="$2a$10$..."></div>
     <div style="font-size:11px;color:var(--text-3);padding:0 4px 12px;line-height:1.6;">开启后每次记账会自动上传到云端。<br>换手机时在这里填同样的 Bin ID / Key，点下方"从云端恢复"即可。</div>
     <div class="modal-actions">
       <button class="btn btn-secondary" id="cloudRestore">从云端恢复</button>
@@ -806,10 +806,10 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
     <div class="amount-display">
       <span class="prefix" id="amountPrefix">¥</span>
       <input class="amount-input" id="amountInput" type="text" inputmode="decimal" placeholder="0.00">
-      <button class="calc-btn" id="openCalcBtn">🟟</button>
+      <button class="calc-btn" id="openCalcBtn">🧮</button>
     </div>
     <div class="currency-row">
-      <span class="icon">🟟</span>
+      <span class="icon">💱</span>
       <div class="currency-chips" id="currencyChips"></div>
     </div>
     <div class="section-title">选择类别</div>
@@ -817,7 +817,7 @@ body.using-page-bg .app-fixed-top{background-color:transparent !important;backgr
     <div class="section-title">备注</div>
     <textarea class="note-input" id="noteInput" placeholder="记点什么吧～（可选）" rows="1"></textarea>
     <div class="section-title">日期</div>
-    <div class="date-row"><span class="label">🟟</span><input type="date" id="dateInput"></div>
+    <div class="date-row"><span class="label">📅</span><input type="date" id="dateInput"></div>
     <div class="modal-actions">
       <button class="btn btn-secondary" id="cancelAdd">取消</button>
       <button class="btn btn-primary" id="saveAdd">保存</button>
@@ -909,39 +909,39 @@ var SYNC_TIME_KEY = 'mycost-last-sync';
 
 var CATEGORIES = {
   expense: [
-    { id:'food', name:'餐饮', emoji:'🟟', bg:'#FFF0F5', chartColor:'#FFB5C8' },
-    { id:'trans', name:'交通', emoji:'🟟', bg:'#EAF3FA', chartColor:'#B5D8F0' },
-    { id:'pet', name:'宠物', emoji:'🟟', bg:'#FFF6E6', chartColor:'#FFD9A8' },
-    { id:'cloth', name:'服饰', emoji:'🟟', bg:'#F2EAF8', chartColor:'#D8B8E8' },
-    { id:'beauty', name:'美妆', emoji:'🟟', bg:'#FFF0F5', chartColor:'#FFC8D5' },
-    { id:'gift', name:'礼物', emoji:'🟟', bg:'#FFEBF1', chartColor:'#F5A8C5' },
-    { id:'daily', name:'日用', emoji:'🟟', bg:'#EBF7EE', chartColor:'#B8E0C8' },
-    { id:'fun', name:'娱乐', emoji:'🟟', bg:'#E8F4F8', chartColor:'#A8D8E8' },
-    { id:'health', name:'医疗', emoji:'🟟', bg:'#FFF3E8', chartColor:'#FFC8A8' },
-    { id:'study', name:'学习', emoji:'🟟', bg:'#EDF0FA', chartColor:'#A8B8E8' },
-    { id:'home', name:'居家', emoji:'🟟', bg:'#FFF8E6', chartColor:'#FFDCA8' },
+    { id:'food', name:'餐饮', emoji:'🍰', bg:'#FFF0F5', chartColor:'#FFB5C8' },
+    { id:'trans', name:'交通', emoji:'🚌', bg:'#EAF3FA', chartColor:'#B5D8F0' },
+    { id:'pet', name:'宠物', emoji:'🐾', bg:'#FFF6E6', chartColor:'#FFD9A8' },
+    { id:'cloth', name:'服饰', emoji:'👗', bg:'#F2EAF8', chartColor:'#D8B8E8' },
+    { id:'beauty', name:'美妆', emoji:'💄', bg:'#FFF0F5', chartColor:'#FFC8D5' },
+    { id:'gift', name:'礼物', emoji:'🎁', bg:'#FFEBF1', chartColor:'#F5A8C5' },
+    { id:'daily', name:'日用', emoji:'🧴', bg:'#EBF7EE', chartColor:'#B8E0C8' },
+    { id:'fun', name:'娱乐', emoji:'🎮', bg:'#E8F4F8', chartColor:'#A8D8E8' },
+    { id:'health', name:'医疗', emoji:'💊', bg:'#FFF3E8', chartColor:'#FFC8A8' },
+    { id:'study', name:'学习', emoji:'📚', bg:'#EDF0FA', chartColor:'#A8B8E8' },
+    { id:'home', name:'居家', emoji:'🏠', bg:'#FFF8E6', chartColor:'#FFDCA8' },
     { id:'other', name:'其他', emoji:'✨', bg:'#F2EFF8', chartColor:'#D8D0E8' }
   ],
   income: [
-    { id:'salary', name:'工资', emoji:'🟟', bg:'#FFF6E6', chartColor:'#B8E0C8' },
-    { id:'bonus', name:'奖金', emoji:'🟟', bg:'#FFF0F5', chartColor:'#A8DBC8' },
-    { id:'redpack', name:'红包', emoji:'🟟', bg:'#FFEBF1', chartColor:'#C8E8C8' },
-    { id:'refund', name:'退款', emoji:'🟟', bg:'#EAF3FA', chartColor:'#B5D8D8' },
-    { id:'side', name:'兼职', emoji:'🟟', bg:'#EBF7EE', chartColor:'#98D8B8' },
-    { id:'invest', name:'理财', emoji:'🟟', bg:'#EDF0FA', chartColor:'#A8C8E8' },
-    { id:'gift_in', name:'礼金', emoji:'🟟', bg:'#FFF0F5', chartColor:'#FFC8D5' },
+    { id:'salary', name:'工资', emoji:'💰', bg:'#FFF6E6', chartColor:'#B8E0C8' },
+    { id:'bonus', name:'奖金', emoji:'🎉', bg:'#FFF0F5', chartColor:'#A8DBC8' },
+    { id:'redpack', name:'红包', emoji:'🧧', bg:'#FFEBF1', chartColor:'#C8E8C8' },
+    { id:'refund', name:'退款', emoji:'💸', bg:'#EAF3FA', chartColor:'#B5D8D8' },
+    { id:'side', name:'兼职', emoji:'💼', bg:'#EBF7EE', chartColor:'#98D8B8' },
+    { id:'invest', name:'理财', emoji:'📈', bg:'#EDF0FA', chartColor:'#A8C8E8' },
+    { id:'gift_in', name:'礼金', emoji:'🎀', bg:'#FFF0F5', chartColor:'#FFC8D5' },
     { id:'other_in', name:'其他', emoji:'✨', bg:'#F2EFF8', chartColor:'#D8D0E8' }
   ]
 };
 
 var CURRENCY_INFO = {
-  CNY: { symbol:'¥',   name:'人民币', flag:'🟟🟟' },
-  USD: { symbol:'$',   name:'美元',   flag:'🟟🟟' },
-  HKD: { symbol:'HK$', name:'港币',   flag:'🟟🟟' },
-  JPY: { symbol:'¥',   name:'日元',   flag:'🟟🟟' },
-  EUR: { symbol:'€',   name:'欧元',   flag:'🟟🟟' },
-  GBP: { symbol:'£',   name:'英镑',   flag:'🟟🟟' },
-  KRW: { symbol:'₩',   name:'韩元',   flag:'🟟🟟' }
+  CNY: { symbol:'¥',   name:'人民币', flag:'🇨🇳' },
+  USD: { symbol:'$',   name:'美元',   flag:'🇺🇸' },
+  HKD: { symbol:'HK$', name:'港币',   flag:'🇭🇰' },
+  JPY: { symbol:'¥',   name:'日元',   flag:'🇯🇵' },
+  EUR: { symbol:'€',   name:'欧元',   flag:'🇪🇺' },
+  GBP: { symbol:'£',   name:'英镑',   flag:'🇬🇧' },
+  KRW: { symbol:'₩',   name:'韩元',   flag:'🇰🇷' }
 };
 var CURRENCY_CODES = Object.keys(CURRENCY_INFO);
 
@@ -1187,7 +1187,7 @@ function checkPeriodicBills(){
   });
   if(generated.length > 0){
     saveState();
-    setTimeout(function(){ showToast('🟟 已生成 ' + generated.length + ' 笔周期账单'); }, 800);
+    setTimeout(function(){ showToast('🔄 已生成 ' + generated.length + ' 笔周期账单'); }, 800);
     return true;
   }
   return false;
@@ -1329,7 +1329,7 @@ function buildBudgetCard(year, month){
   var monthExpense = getMonthTotal(year, month, 'expense');
   var totalBudget = getEffectiveTotalBudget();
   var sym = getMainSymbol();
-  var html = '<div class="bo-header"><div class="bo-title">🟟 本月预算</div><button class="bo-edit" id="openBudgetEdit">设置</button></div>';
+  var html = '<div class="bo-header"><div class="bo-title">📊 本月预算</div><button class="bo-edit" id="openBudgetEdit">设置</button></div>';
   if(totalBudget > 0){
     var ratio = monthExpense / totalBudget;
     var displayRatio = Math.min(1, ratio);
@@ -1392,7 +1392,7 @@ function renderMonth(container){
   } else {
     var setupBtn = document.createElement('div');
     setupBtn.className = 'budget-setup';
-    setupBtn.innerHTML = '<span>🟟 设置本月预算，控制支出</span><span class="right"><span class="arrow">›</span></span>';
+    setupBtn.innerHTML = '<span>📊 设置本月预算，控制支出</span><span class="right"><span class="arrow">›</span></span>';
     setupBtn.onclick = openBudgetModal;
     container.appendChild(setupBtn);
   }
@@ -1461,7 +1461,7 @@ document.getElementById('budgetSave').addEventListener('click', function(){
   state.budgets = newBudgets;
   saveState(); render();
   document.getElementById('budgetModal').classList.remove('open');
-  showToast('预算已保存 🟟');
+  showToast('预算已保存 📊');
 });
 document.getElementById('totalBudgetInput').addEventListener('input', function(){
   this.value = this.value.replace(/[^\d.]/g, '').replace(/(\..*)\./g, '$1');
@@ -1472,7 +1472,7 @@ function renderPeriodicList(){
   var wrap = document.getElementById('periodicListWrap');
   wrap.innerHTML = '';
   if(state.periodicBills.length === 0){
-    wrap.innerHTML = '<div class="periodic-empty"><span class="big">🟟</span>还没有周期账单<br><span style="font-size:11px;">添加房租、工资、会员等，到期自动生成</span></div>';
+    wrap.innerHTML = '<div class="periodic-empty"><span class="big">🔄</span>还没有周期账单<br><span style="font-size:11px;">添加房租、工资、会员等，到期自动生成</span></div>';
   } else {
     var list = document.createElement('div');
     list.className = 'periodic-list';
@@ -1664,7 +1664,7 @@ document.getElementById('peSave').onclick = function(){
       lastGenerated: formatDate(new Date()), startDate: formatDate(new Date()),
       enabled: true, createdAt: Date.now()
     });
-    showToast('已添加 🟟');
+    showToast('已添加 🔄');
   }
   saveState();
   document.getElementById('periodicEditModal').classList.remove('open');
@@ -1843,7 +1843,7 @@ document.getElementById('billFileInput').addEventListener('change', function(e){
 function renderBillError(msg){
   var content = document.getElementById('billImportContent');
   content.innerHTML = '<div class="bill-guide" style="text-align:center;padding:30px 20px;color:var(--red-soft);">' +
-      '<div style="font-size:36px;margin-bottom:10px;">🟟</div>' +
+      '<div style="font-size:36px;margin-bottom:10px;">😢</div>' +
       '<div style="font-size:13px;font-weight:600;line-height:1.7;">' + escapeHtml(msg) + '</div>' +
     '</div>' +
     '<div class="modal-actions"><button class="btn btn-secondary" id="billBackBtn" style="flex:1;">返回</button></div>';
@@ -1852,7 +1852,7 @@ function renderBillError(msg){
 function renderBillPreview(result){
   var content = document.getElementById('billImportContent');
   var platformName = result.platform === 'alipay' ? '支付宝' : '微信';
-  var platformIcon = result.platform === 'alipay' ? '🟟' : '🟟';
+  var platformIcon = result.platform === 'alipay' ? '💙' : '💚';
   var expenseCount = 0, incomeCount = 0;
   result.items.forEach(function(it){ if(it.type === 'expense') expenseCount++; else incomeCount++; });
   var html = '<div style="text-align:center;margin-bottom:12px;"><span class="bill-platform-tag">' + platformIcon + ' 识别为 ' + platformName + ' 账单</span></div>';
@@ -1923,7 +1923,7 @@ function renderYear(container){
   var year = state.focusDate.getFullYear();
   var sym = getMainSymbol();
   var toolbar = document.createElement('div'); toolbar.className='year-toolbar';
-  toolbar.innerHTML = '<div class="year-toolbar-title">'+year+' 年 · 月度收支</div><button class="year-detail-btn" id="openDetailBtn"><span class="icon">🟟</span><span>收支明细</span></button>';
+  toolbar.innerHTML = '<div class="year-toolbar-title">'+year+' 年 · 月度收支</div><button class="year-detail-btn" id="openDetailBtn"><span class="icon">📊</span><span>收支明细</span></button>';
   container.appendChild(toolbar);
   var monthData=[], maxEx=0, yearIn=0, yearEx=0;
   for(var m=0;m<12;m++){
@@ -2188,7 +2188,7 @@ document.getElementById('goalSave').addEventListener('click',function(){
   state.savingGoal.name = name; state.savingGoal.amount = Math.round(amount*100)/100;
   saveState(); applySkin(); renderHeader(); render();
   document.getElementById('goalModal').classList.remove('open');
-  showToast('存钱目标已更新 🟟');
+  showToast('存钱目标已更新 🎯');
 });
 document.getElementById('goalModal').addEventListener('click',function(e){ if(e.target===document.getElementById('goalModal')) document.getElementById('goalModal').classList.remove('open'); });
 document.getElementById('goalAmountInput').addEventListener('input',function(){
@@ -2256,7 +2256,7 @@ document.getElementById('saveAdd').addEventListener('click',function(){
   saveState();
   document.getElementById('addModal').classList.remove('open');
   render();
-  showToast(state.currentType==='expense'?'记下一笔支出啦 🟟':'记下一笔收入啦 🟟');
+  showToast(state.currentType==='expense'?'记下一笔支出啦 💸':'记下一笔收入啦 💰');
 });
 document.getElementById('amountInput').addEventListener('input',function(){
   this.value = this.value.replace(/[^\d.]/g,'').replace(/(\..*)\./g,'$1');
@@ -2359,7 +2359,7 @@ document.querySelectorAll('#settingsPanel .settings-item').forEach(function(item
     else if(act === 'bill'){ closeSettings(); setTimeout(function(){ openBillImportModal(); }, 240); }
     else if(act === 'backup'){ closeSettings(); setTimeout(function(){ document.getElementById('backupModal').classList.add('open'); }, 240); }
     else if(act === 'skin'){ closeSettings(); setTimeout(function(){ openSkinModal(); }, 240); }
-    else if(act === 'about'){ alert('MyCost v12\n\n一个本地记账 App\n数据掌握在自己手里\n\n🟟 感谢使用'); }
+    else if(act === 'about'){ alert('MyCost v12\n\n一个本地记账 App\n数据掌握在自己手里\n\n💗 感谢使用'); }
   });
 });
 
@@ -2372,7 +2372,7 @@ document.getElementById('avatarFileInput').addEventListener('change', function(e
   compressImage(file, 300, 0.85).then(function(dataUrl){
     state.skin.avatar = dataUrl;
     saveState(); applyAvatar();
-    showToast('头像已更新 🟟');
+    showToast('头像已更新 🐰');
   }).catch(function(err){
     console.error(err);
     showToast('头像处理失败');
@@ -2455,7 +2455,7 @@ document.getElementById('ratesSave').addEventListener('click', function(){
   state.currencies.rates.CNY = 1;
   saveState(); renderHeader(); render();
   document.getElementById('ratesModal').classList.remove('open');
-  showToast('汇率已更新 🟟');
+  showToast('汇率已更新 💹');
 });
 
 function compressImage(file, maxWidth, quality){
@@ -2511,7 +2511,7 @@ document.getElementById('cardBgFileInput').addEventListener('change', function(e
   compressImage(file, 900, 0.78).then(function(dataUrl){
     state.skin.cardBg = dataUrl;
     saveState(); applySkin(); updateSkinPreviews(); renderHeader();
-    showToast('卡片背景已更新 🟟');
+    showToast('卡片背景已更新 🎨');
   }).catch(function(err){ console.error(err); showToast('图片处理失败，换一张试试'); });
   e.target.value = '';
 });
@@ -2521,7 +2521,7 @@ document.getElementById('pageBgFileInput').addEventListener('change', function(e
   compressImage(file, 900, 0.75).then(function(dataUrl){
     state.skin.pageBg = dataUrl;
     saveState(); applySkin(); updateSkinPreviews(); renderHeader();
-    showToast('页面背景已更新 🟟');
+    showToast('页面背景已更新 🎨');
   }).catch(function(err){ console.error(err); showToast('图片处理失败，换一张试试'); });
   e.target.value = '';
 });
