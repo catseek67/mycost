@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>MyCost</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNGRkQ0RTMiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNGRkI1Q0MiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgcng9IjQwIiBmaWxsPSJ1cmwoI2cpIi8+PHJlY3QgeD0iMzgiIHk9IjUwIiB3aWR0aD0iMTA0IiBoZWlnaHQ9IjgwIiByeD0iMTYiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOTUiLz48dGV4dCB4PSI5MCIgeT0iMTA1IiBmb250LWZhbWlseT0iLWFwcGxlLXN5c3RlbSIgZm9udC1zaXplPSI1MiIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM3QTNBNTUiPsKlPC90ZXh0Pjwvc3ZnPg==">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --pink-1:#FFFCFD;--pink-2:#FFF6FA;--pink-3:#FFE9F1;--pink-4:#FFD4E3;--pink-5:#FFB5CC;--pink-6:#E89AB5;
+  --text-1:#5A4A50;--text-2:#9A8A90;--text-3:#C5B5BB;--white:#FFFFFF;
+  --green-soft:#5BB89A;--red-soft:#FF7A9C;
+  --shadow:0 4px 20px rgba(255,181,204,0.18);--shadow-sm:0 2px 10px rgba(255,181,204,0.12);
+}
+html,body{width:100%;height:100%;overflow:hidden;background-color:#FFFCFD;
+  background-image:radial-gradient(circle, #FFE9F1 1.5px, transparent 1.5px),radial-gradient(circle, #FFF0F6 1.5px, transparent 1.5px);
+  background-size:22px 22px;background-position:0 0, 11px 11px;color:var(--text-1);
+  font-family:'Quicksand','Yuanti SC','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+  font-size:15px;-webkit-font-smoothing:antialiased;}
+body{overscroll-behavior:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input,textarea{font-family:inherit;font-size:inherit;color:inherit;border:none;background:none;outline:none;}
+
+.app{position:relative;z-index:1;max-width:480px;margin:0 auto;height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden;}
+.app-fixed-top{flex-shrink:0;background-color:#FFFCFD;
+  background-image:radial-gradient(circle, #FFE9F1 1.5px, transparent 1.5px),radial-gradient(circle, #FFF0F6 1.5px, transparent 1.5px);
+  background-size:22px 22px;background-position:0 0, 11px 11px;
+  box-shadow:0 4px 14px rgba(255,181,204,0.08);position:relative;z-index:5;}
+
+.header{padding:16px 18px 8px;}
+.savings-card{position:relative;background:linear-gradient(135deg,#FFEDF3 0%,#FFD4E3 100%);border-radius:24px;padding:18px 22px;box-shadow:var(--shadow);overflow:hidden;border:1.5px solid rgba(255,255,255,0.7);cursor:pointer;transition:transform 0.15s;}
+.savings-card:active{transform:scale(0.99);}
+.savings-card::before{content:'';position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,0.5);}
+.savings-card::after{content:'';position:absolute;bottom:-30px;right:30px;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,0.35);}
+.savings-label{font-size:13px;color:#A86080;font-weight:600;letter-spacing:1px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;}
+.savings-label .left{display:flex;align-items:center;gap:6px;}
+.savings-label .edit-hint{font-size:10px;color:#C08AA0;background:rgba(255,255,255,0.7);padding:3px 8px;border-radius:100px;font-weight:600;letter-spacing:0.3px;}
+.savings-label .heart{animation:heartbeat 1.6s ease-in-out infinite;}
+@keyframes heartbeat{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+.savings-amount{font-family:'ZCOOL KuaiLe','Quicksand',sans-serif;font-size:34px;color:#7A3A55;margin:4px 0 12px;letter-spacing:0.5px;font-variant-numeric:tabular-nums;position:relative;z-index:1;}
+.savings-amount .yen{font-size:20px;opacity:0.65;margin-right:2px;}
+.goal-section{position:relative;z-index:1;margin-top:4px;}
+.goal-header{display:flex;justify-content:space-between;font-size:12px;color:#A86080;font-weight:600;margin-bottom:6px;}
+.goal-bar{height:8px;background:rgba(255,255,255,0.7);border-radius:4px;overflow:hidden;}
+.goal-fill{height:100%;background:linear-gradient(90deg,#FFB5CC,#E89AB5);border-radius:4px;transition:width 0.4s ease;}
+
+/* 新增：独立快捷操作条 */
+.quick-actions{display:flex;gap:8px;margin-top:10px;}
+.quick-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;background:var(--white);border:1.5px dashed var(--pink-4);border-radius:14px;padding:9px 6px;font-size:12px;color:var(--text-2);font-weight:600;letter-spacing:0.3px;cursor:pointer;transition:all 0.15s;-webkit-tap-highlight-color:transparent;}
+.quick-btn:active{transform:scale(0.96);background:var(--pink-2);border-color:var(--pink-5);}
+.quick-btn .q-icon{font-size:14px;line-height:1;}
+
+.summary-card{display:flex;gap:10px;margin-top:12px;}
+.summary-item{flex:1;background:var(--white);border-radius:18px;padding:12px 16px;box-shadow:var(--shadow-sm);border:1.5px dashed var(--pink-4);}
+.summary-label{font-size:11px;color:var(--text-3);letter-spacing:0.5px;margin-bottom:4px;display:flex;align-items:center;gap:4px;}
+.summary-label .dot{width:6px;height:6px;border-radius:50%;}
+.summary-label .dot.income{background:var(--green-soft);}
+.summary-label .dot.expense{background:var(--red-soft);}
+.summary-value{font-size:18px;font-weight:700;color:var(--text-1);font-variant-numeric:tabular-nums;}
+.summary-value.income{color:var(--green-soft);}
+.summary-value.expense{color:var(--red-soft);}
+
+.tabs{display:flex;gap:6px;margin:12px 18px 0;background:rgba(255,255,255,0.75);border-radius:20px;padding:5px;box-shadow:var(--shadow-sm);border:1.5px solid var(--pink-3);}
+.tab-btn{flex:1;padding:10px 6px;border-radius:16px;font-size:14px;font-weight:600;color:var(--text-2);transition:all 0.25s ease;letter-spacing:0.5px;}
+.tab-btn.active{background:linear-gradient(135deg,#FFE9F1,#FFD4E3);color:#7A3A55;box-shadow:0 3px 10px rgba(255,181,204,0.35);}
+
+.date-nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px 10px;}
+.date-nav-btn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--white);color:var(--pink-6);font-size:18px;font-weight:700;box-shadow:var(--shadow-sm);border:1.5px solid var(--pink-3);transition:transform 0.15s;}
+.date-nav-btn:active{transform:scale(0.92);}
+.date-nav-title{font-family:'ZCOOL KuaiLe',sans-serif;font-size:17px;color:var(--text-1);letter-spacing:1px;}
+
+.main{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;padding:4px 18px 110px;}
+.main::-webkit-scrollbar{width:0;display:none;}
+
+.day-summary{display:flex;gap:10px;margin-bottom:8px;}
+.day-summary-item{flex:1;background:var(--white);border-radius:16px;padding:12px 14px;box-shadow:var(--shadow-sm);border:1.5px dashed var(--pink-4);text-align:center;}
+.day-summary-item .k{font-size:11px;color:var(--text-3);margin-bottom:2px;}
+.day-summary-item .v{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums;}
+.day-summary-item .v.income{color:var(--green-soft);}
+.day-summary-item .v.expense{color:var(--red-soft);}
+.press-hint{text-align:center;font-size:11px;color:var(--text-3);padding:6px 0 12px;letter-spacing:0.5px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:5px;opacity:0.8;}
+.press-hint .dot{width:4px;height:4px;border-radius:50%;background:var(--pink-4);}
+.tx-list{display:flex;flex-direction:column;gap:10px;}
+.tx-item{display:flex;align-items:center;gap:12px;background:var(--white);border-radius:18px;padding:12px 14px;box-shadow:var(--shadow-sm);border:1.5px dashed var(--pink-4);position:relative;transition:transform 0.15s,background 0.2s,border-color 0.2s;touch-action:pan-y;-webkit-user-select:none;user-select:none;}
+.tx-item.pressing{transform:scale(0.97);background:linear-gradient(135deg,#FFF6FA,#FFE9F1);border-color:var(--pink-5);border-style:solid;}
+.tx-emoji{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.tx-info{flex:1;min-width:0;}
+.tx-name{font-size:14px;font-weight:600;color:var(--text-1);}
+.tx-note{font-size:12px;color:var(--text-3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tx-amount{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums;flex-shrink:0;}
+.tx-amount.expense{color:var(--red-soft);}
+.tx-amount.income{color:var(--green-soft);}
+.empty-state{text-align:center;padding:50px 20px;color:var(--text-3);}
+.empty-state .emoji{font-size:40px;margin-bottom:14px;display:block;opacity:0.5;letter-spacing:4px;}
+.empty-state .text{font-size:14px;line-height:1.7;}
+
+.month-summary-top{display:flex;gap:10px;margin-bottom:12px;}
+.month-summary-top .item{flex:1;background:var(--white);border-radius:18px;padding:14px 16px;box-shadow:var(--shadow-sm);border:1.5px dashed var(--pink-4);text-align:center;position:relative;overflow:hidden;}
+.month-summary-top .item::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:18px 18px 0 0;}
+.month-summary-top .item.income-item::before{background:linear-gradient(90deg,transparent,#A8DBC8,transparent);}
+.month-summary-top .item.expense-item::before{background:linear-gradient(90deg,transparent,#FFB5CC,transparent);}
+.month-summary-top .item .k{font-size:11px;color:var(--text-3);font-weight:600;margin-bottom:5px;letter-spacing:0.5px;}
+.month-summary-top .item .v{font-family:'ZCOOL KuaiLe','Quicksand',sans-serif;font-size:19px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:0.3px;}
+.month-summary-top .item .v.income{color:var(--green-soft);}
+.month-summary-top .item .v.expense{color:var(--red-soft);}
+.month-summary-top .item .v.empty{color:var(--text-3);}
+
+.calendar{background:var(--white);border-radius:22px;padding:16px 10px;box-shadow:var(--shadow-sm);border:1.5px dashed var(--pink-4);}
+.calendar-weekdays{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:8px;}
+.calendar-weekdays .wd{text-align:center;font-size:11px;color:var(--text-3);font-weight:600;padding:6px 0;}
+.calendar-weekdays .wd.sun{color:var(--pink-6);}
+.calendar-weekdays .wd.sat{color:#8FB8D8;}
+.calendar-days{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
+.cal-day{aspect-ratio:0.85;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;border-radius:12px;cursor:pointer;transition:all 0.15s;padding:5px 2px 3px;position:relative;min-height:0;}
+.cal-day:active{transform:scale(0.92);}
+.cal-day.other-month{opacity:0.22;}
+.cal-day.today{background:linear-gradient(135deg,#FFE9F1,#FFD4E3);box-shadow:0 2px 8px rgba(255,181,204,0.3);}
+.cal-day.has-tx{background:rgba(255,246,250,0.9);}
+.cal-day.today.has-tx{background:linear-gradient(135deg,#FFE9F1,#FFD4E3);}
+.cal-day .num{font-size:12px;font-weight:700;color:var(--text-1);font-variant-numeric:tabular-nums;line-height:1.1;}
+.cal-day.today .num{color:#7A3A55;}
+.cal-day .amts{display:flex;flex-direction:column;align-items:center;width:100%;margin-top:3px;gap:2px;}
+.cal-day .amt{font-size:11px;font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;max-width:100%;letter-spacing:-0.3px;}
+.cal-day .amt.income{color:var(--green-soft);}
+.cal-day .amt.expense{color:var(--red-soft);}
+
+.year-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:0 4px;}
+.year-toolbar-title{font-family:'ZCOOL KuaiLe',sans-serif;font-size:15px;color:var(--text-1);letter-spacing:1px;}
+.year-detail-btn{display:flex;align-items:center;gap:5px;background:linear-gradient(135deg,#FFE9F1,#FFD4E3);color:#7A3A55;padding:7px 14px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:0.5px;box-shadow:0 2px 8px rgba(255,181,204,0.3);border:1.5px solid rgba(255,255,255,0.7);transition:transform 0.15s;}
+.year-detail-btn:active{transform:scale(0.95);}
+.year-detail-btn .icon{font-size:14px;}
+.year-summary-top{display:flex;gap:10px;margin-bottom:16px;}
+.year-summary-top .item{flex:1;background:var(--white);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow-sm);border:1.5px dashed var(--pink-4);text-align:center;position:relative;overflow:hidden;}
+.year-summary-top .item::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:18px 18px 0 0;}
+.year-summary-top .item.income-item::before{background:linear-gradient(90deg,transparent,#A8DBC8,transparent);}
+.year-summary-top .item.expense-item::before{background:linear-gradient(90deg,transparent,#FFB5CC,transparent);}
+.year-summary-top .item .k{font-size:11px;color:var(--text-3);font-weight:600;margin-bottom:6px;letter-spacing:0.5px;}
+.year-summary-top .item .v{font-family:'ZCOOL KuaiLe','Quicksand',sans-serif;font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:0.5px;}
+.year-summary-top .item .v.income{color:var(--green-soft);}
+.year-summary-top .item .v.expense{color:var(--red-soft);}
+.year-summary-top .item .v.empty{color:var(--text-3);}
+.month-list{display:flex;flex-direction:column;gap:10px;}
+.month-card-v{background:var(--white);border-radius:18px;padding:14px 16px;box-shadow:var(--shadow-sm);border:1.5px dashed var(--pink-4);cursor:pointer;transition:all 0.15s;}
+.month-card-v:active{transform:scale(0.99);background:linear-gradient(135deg,#FFFCFD,#FFF6FA);}
+.month-card-v.current{border-style:solid;border-color:var(--pink-5);box-shadow:0 4px 14px rgba(255,181,204,0.3);}
+.mc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.mc-month-v{font-family:'ZCOOL KuaiLe',sans-serif;font-size:18px;color:#7A3A55;display:flex;align-items:baseline;gap:3px;}
+.mc-month-v .unit{font-size:11px;color:var(--text-3);font-family:'Quicksand',sans-serif;font-weight:600;}
+.mc-current-tag{font-size:10px;color:#7A3A55;background:linear-gradient(135deg,#FFE9F1,#FFD4E3);padding:3px 9px;border-radius:100px;font-weight:700;letter-spacing:0.5px;}
+.mc-body-v{display:flex;flex-direction:column;gap:6px;}
+.mc-row-v{display:flex;justify-content:space-between;align-items:baseline;}
+.mc-label-v{font-size:12px;color:var(--text-3);font-weight:600;letter-spacing:0.3px;}
+.mc-value-v{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;}
+.mc-value-v.income{color:var(--green-soft);}
+.mc-value-v.expense{color:var(--red-soft);}
+.mc-value-v.empty{color:var(--text-3);}
+.mc-bar-v{height:5px;background:var(--pink-3);border-radius:3px;margin-top:6px;overflow:hidden;}
+.mc-bar-fill-v{height:100%;background:linear-gradient(90deg,#FFD4E3,#FFB5CC);border-radius:3px;transition:width 0.4s ease;}
+.year-empty{text-align:center;padding:60px 20px;color:var(--text-3);}
+.year-empty .emoji{font-size:40px;margin-bottom:14px;display:block;opacity:0.5;}
+.year-empty .text{font-size:14px;line-height:1.7;}
+
+.fab{position:fixed;bottom:30px;right:calc(50% - 240px + 24px);width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#FFB5CC,#E89AB5);color:var(--white);font-size:32px;font-weight:300;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(232,154,181,0.45);z-index:50;transition:transform 0.2s ease,box-shadow 0.2s ease;line-height:1;padding-bottom:3px;}
+.fab:active{transform:scale(0.92);box-shadow:0 3px 12px rgba(232,154,181,0.35);}
+@media (max-width:520px){.fab{right:24px;}}
+
+.modal{position:fixed;inset:0;background:rgba(122,58,85,0.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:100;display:none;align-items:flex-end;justify-content:center;}
+.modal.open{display:flex;}
+.modal-content{background:var(--pink-1);width:100%;max-width:480px;border-radius:28px 28px 0 0;padding:20px 20px 30px;max-height:92vh;overflow-y:auto;animation:slideUp 0.28s cubic-bezier(0.34,1.2,0.64,1);position:relative;}
+@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.modal-handle{width:40px;height:4px;background:var(--pink-4);border-radius:2px;margin:0 auto 16px;}
+.modal-title{font-family:'ZCOOL KuaiLe',sans-serif;font-size:18px;color:var(--text-1);text-align:center;margin-bottom:18px;letter-spacing:1px;}
+
+.goal-input-row{display:flex;align-items:center;gap:10px;background:var(--white);border-radius:16px;padding:14px 18px;box-shadow:var(--shadow-sm);border:2px dashed var(--pink-4);margin-bottom:12px;}
+.goal-input-row .icon{font-size:18px;flex-shrink:0;}
+.goal-input-row .prefix{font-size:20px;color:var(--pink-6);font-weight:700;flex-shrink:0;}
+.goal-input-row input{flex:1;font-size:18px;font-weight:700;color:var(--text-1);text-align:right;font-variant-numeric:tabular-nums;min-width:0;font-family:inherit;}
+.goal-input-row input::placeholder{color:var(--text-3);font-weight:500;}
+.goal-input-row input[type="text"].left-align{text-align:left;font-size:15px;font-weight:600;}
+.goal-field-label{font-size:12px;color:var(--text-3);font-weight:600;letter-spacing:0.5px;margin:0 4px 6px;}
+
+.type-tabs{display:flex;gap:6px;background:var(--white);border-radius:16px;padding:4px;margin-bottom:18px;box-shadow:var(--shadow-sm);border:1.5px solid var(--pink-3);}
+.type-tab{flex:1;padding:10px;border-radius:12px;font-size:14px;font-weight:700;color:var(--text-2);transition:all 0.2s;}
+.type-tab.active.expense{background:linear-gradient(135deg,#FFE9F1,#FFD4E3);color:#7A3A55;}
+.type-tab.active.income{background:linear-gradient(135deg,#DCF2E7,#B8E0D0);color:#1A4A3A;}
+.amount-display{background:var(--white);border-radius:20px;padding:18px 22px;margin-bottom:16px;box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:space-between;border:2px dashed var(--pink-4);}
+.amount-display .prefix{font-size:24px;color:var(--pink-6);font-weight:700;}
+.amount-input{flex:1;font-size:36px;font-weight:700;font-family:'ZCOOL KuaiLe','Quicksand',sans-serif;color:var(--text-1);text-align:right;font-variant-numeric:tabular-nums;min-width:0;}
+.amount-input::placeholder{color:var(--text-3);font-weight:400;}
+.calc-btn{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#FFE9F1,#FFD4E3);display:flex;align-items:center;justify-content:center;font-size:20px;margin-left:10px;flex-shrink:0;box-shadow:0 2px 6px rgba(255,181,204,0.3);}
+.section-title{font-size:12px;color:var(--text-3);letter-spacing:1px;font-weight:600;margin:14px 4px 8px;}
+.category-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.cat-item{background:var(--white);border-radius:14px;padding:10px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;box-shadow:var(--shadow-sm);border:2px solid transparent;transition:all 0.2s;cursor:pointer;}
+.cat-item:active{transform:scale(0.94);}
+.cat-item.selected{border-color:var(--pink-5);background:linear-gradient(135deg,#FFF6FA,#FFE9F1);box-shadow:0 4px 12px rgba(255,181,204,0.3);}
+.cat-emoji{font-size:22px;}
+.cat-name{font-size:10px;color:var(--text-2);font-weight:600;}
+.note-input{width:100%;background:var(--white);border-radius:16px;padding:14px 18px;font-size:14px;box-shadow:var(--shadow-sm);border:2px dashed var(--pink-4);resize:none;min-height:52px;font-family:inherit;color:var(--text-1);}
+.note-input::placeholder{color:var(--text-3);}
+.date-row{display:flex;align-items:center;gap:10px;background:var(--white);border-radius:16px;padding:12px 18px;box-shadow:var(--shadow-sm);border:2px dashed var(--pink-4);}
+.date-row .label{font-size:13px;color:var(--text-2);font-weight:600;}
+.date-row input{flex:1;font-size:14px;font-weight:600;color:var(--text-1);text-align:right;}
+.modal-actions{display:flex;gap:10px;margin-top:20px;}
+.btn{flex:1;padding:16px;border-radius:16px;font-size:15px;font-weight:700;letter-spacing:1px;transition:transform 0.15s;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:linear-gradient(135deg,#FFB5CC,#E89AB5);color:var(--white);box-shadow:0 6px 16px rgba(232,154,181,0.35);}
+.btn-secondary{background:var(--white);color:var(--text-2);border:2px dashed var(--pink-4);}
+
+.calc-display{background:var(--white);border-radius:18px;padding:18px 22px;margin-bottom:14px;box-shadow:var(--shadow-sm);border:2px dashed var(--pink-4);text-align:right;min-height:76px;display:flex;flex-direction:column;justify-content:center;}
+.calc-expr{font-size:14px;color:var(--text-3);min-height:18px;word-break:break-all;font-variant-numeric:tabular-nums;}
+.calc-result{font-size:30px;font-weight:700;font-family:'ZCOOL KuaiLe','Quicksand',sans-serif;color:var(--text-1);font-variant-numeric:tabular-nums;margin-top:4px;word-break:break-all;}
+.calc-keys{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
+.calc-key{aspect-ratio:1.55;border-radius:14px;background:var(--white);font-size:20px;font-weight:600;color:var(--text-1);box-shadow:var(--shadow-sm);transition:transform 0.1s,background 0.2s;display:flex;align-items:center;justify-content:center;font-family:'Quicksand',sans-serif;}
+.calc-key:active{transform:scale(0.92);background:var(--pink-3);}
+.calc-key.op{color:var(--pink-6);font-weight:700;}
+.calc-key.eq{background:linear-gradient(135deg,#FFB5CC,#E89AB5);color:var(--white);}
+.calc-key.eq:active{background:linear-gradient(135deg,#E89AB5,#D48BA6);}
+.calc-key.fn{background:linear-gradient(135deg,#FFE9F1,#FFD4E3);color:#7A3A55;font-size:16px;font-weight:700;}
+.calc-key.zero{grid-column:span 2;aspect-ratio:3.2;}
+
+.detail-tabs{display:flex;gap:6px;background:var(--white);border-radius:16px;padding:4px;margin-bottom:16px;box-shadow:var(--shadow-sm);border:1.5px solid var(--pink-3);}
+.detail-tab{flex:1;padding:9px;border-radius:12px;font-size:13px;font-weight:700;color:var(--text-2);transition:all 0.2s;letter-spacing:0.5px;}
+.detail-tab.active.expense{background:linear-gradient(135deg,#FFE9F1,#FFD4E3);color:#7A3A55;}
+.detail-tab.active.income{background:linear-gradient(135deg,#DCF2E7,#B8E0D0);color:#1A4A3A;}
+.detail-chart{display:flex;justify-content:center;margin-bottom:18px;min-height:120px;align-items:center;}
+.detail-chart svg{width:220px;height:220px;}
+.detail-total{text-align:center;padding:14px;background:linear-gradient(135deg,#FFF6FA,#FFE9F1);border-radius:16px;margin-bottom:16px;border:1.5px dashed var(--pink-4);transition:background 0.3s;}
+.detail-total.income{background:linear-gradient(135deg,#EFFAF4,#DCF2E7);}
+.detail-total .k{font-size:11px;color:var(--text-3);font-weight:600;letter-spacing:1px;margin-bottom:4px;}
+.detail-total .v{font-family:'ZCOOL KuaiLe','Quicksand',sans-serif;font-size:26px;font-weight:700;color:#7A3A55;font-variant-numeric:tabular-nums;}
+.detail-total.income .v{color:#2E7A5A;}
+.detail-legend{display:flex;flex-direction:column;gap:8px;}
+.detail-legend .legend-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;background:var(--white);border:1.5px dashed var(--pink-4);}
+.detail-legend .legend-color{width:14px;height:14px;border-radius:4px;flex-shrink:0;}
+.detail-legend .legend-name{flex:1;font-size:13px;font-weight:600;color:var(--text-1);}
+.detail-legend .legend-name .pct{font-size:11px;color:var(--text-3);font-weight:500;margin-left:6px;}
+.detail-legend .legend-amount{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;}
+.detail-legend .legend-amount.expense{color:var(--red-soft);}
+.detail-legend .legend-amount.income{color:var(--green-soft);}
+.detail-empty{text-align:center;padding:40px 20px;color:var(--text-3);font-size:13px;}
+
+.toast{position:fixed;top:60px;left:50%;transform:translate(-50%,-20px);background:rgba(122,58,85,0.9);color:var(--white);padding:10px 20px;border-radius:100px;font-size:13px;font-weight:600;letter-spacing:0.5px;z-index:200;opacity:0;pointer-events:none;transition:all 0.3s ease;}
+.toast.show{opacity:1;transform:translate(-50%,0);}
+::-webkit-scrollbar{width:0;display:none;}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="app-fixed-top">
+    <div class="header">
+      <div class="savings-card" id="savingsCard">
+        <div class="savings-label">
+          <div class="left">
+            <span class="heart">💗</span>
+            <span>我的小金库</span>
+          </div>
+          <span class="edit-hint">编辑目标</span>
+        </div>
+        <div class="savings-amount">
+          <span class="yen">¥</span><span id="savingsAmount">0.00</span>
+        </div>
+        <div class="goal-section">
+          <div class="goal-header">
+            <span id="goalName">存钱目标</span>
+            <span id="goalProgress">0 / 10000</span>
+          </div>
+          <div class="goal-bar">
+            <div class="goal-fill" id="goalFill" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 独立快捷按钮条 -->
+      <div class="quick-actions">
+        <button class="quick-btn" id="cloudBtn" type="button">
+          <span class="q-icon">☁️</span><span>云同步</span>
+        </button>
+        <button class="quick-btn" id="exportBtn" type="button">
+          <span class="q-icon">📤</span><span>导出</span>
+        </button>
+        <button class="quick-btn" id="importBtn" type="button">
+          <span class="q-icon">📥</span><span>导入</span>
+        </button>
+      </div>
+
+      <div class="summary-card">
+        <div class="summary-item">
+          <div class="summary-label"><span class="dot income"></span>本月收入</div>
+          <div class="summary-value income" id="monthIncome">¥0</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-label"><span class="dot expense"></span>本月支出</div>
+          <div class="summary-value expense" id="monthExpense">¥0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn" data-view="day">日账</button>
+      <button class="tab-btn active" data-view="month">月账</button>
+      <button class="tab-btn" data-view="year">年账</button>
+    </div>
+
+    <div class="date-nav">
+      <button class="date-nav-btn" id="navPrev">‹</button>
+      <div class="date-nav-title" id="navTitle"></div>
+      <button class="date-nav-btn" id="navNext">›</button>
+    </div>
+  </div>
+
+  <div class="main" id="mainArea"></div>
+</div>
+
+<button class="fab" id="fabAdd">+</button>
+
+<!-- 存钱目标弹窗 -->
+<div class="modal" id="goalModal">
+  <div class="modal-content" style="max-width:400px;">
+    <div class="modal-handle"></div>
+    <div class="modal-title">✎ 设置存钱目标</div>
+    <div class="goal-field-label">目标名称</div>
+    <div class="goal-input-row">
+      <span class="icon">🎯</span>
+      <input type="text" id="goalNameInput" class="left-align" placeholder="例如：去旅行 / 买相机" maxlength="20">
+    </div>
+    <div class="goal-field-label">目标金额</div>
+    <div class="goal-input-row">
+      <span class="prefix">¥</span>
+      <input type="text" id="goalAmountInput" inputmode="decimal" placeholder="0">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="goalCancel">取消</button>
+      <button class="btn btn-primary" id="goalSave">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 云同步弹窗 -->
+<div class="modal" id="cloudModal">
+  <div class="modal-content" style="max-width:420px;">
+    <div class="modal-handle"></div>
+    <div class="modal-title">☁️ 云同步设置</div>
+    <div class="goal-field-label">Bin ID</div>
+    <div class="goal-input-row">
+      <span class="icon">📦</span>
+      <input type="text" id="binIdInput" class="left-align" placeholder="从 jsonbin.io 获取">
+    </div>
+    <div class="goal-field-label">X-Master-Key</div>
+    <div class="goal-input-row">
+      <span class="icon">🔑</span>
+      <input type="text" id="binKeyInput" class="left-align" placeholder="$2a$10$...">
+    </div>
+    <div style="font-size:11px;color:var(--text-3);padding:0 4px 12px;line-height:1.6;">
+      开启后每次记账会自动上传到云端。<br>换手机时在这里填同样的 Bin ID / Key，点下方"从云端恢复"即可。
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="cloudRestore">从云端恢复</button>
+      <button class="btn btn-primary" id="cloudSave">保存</button>
+    </div>
+    <div class="modal-actions" style="margin-top:10px;">
+      <button class="btn btn-secondary" id="cloudCancel" style="flex:1;">关闭</button>
+    </div>
+    <div style="text-align:center;font-size:11px;color:var(--text-3);margin-top:12px;" id="cloudStatus">未开启云同步</div>
+  </div>
+</div>
+
+<!-- 记账弹窗 -->
+<div class="modal" id="addModal">
+  <div class="modal-content">
+    <div class="modal-handle"></div>
+    <div class="type-tabs">
+      <button class="type-tab expense active" data-type="expense">支出</button>
+      <button class="type-tab income" data-type="income">收入</button>
+    </div>
+    <div class="amount-display">
+      <span class="prefix">¥</span>
+      <input class="amount-input" id="amountInput" type="text" inputmode="decimal" placeholder="0.00">
+      <button class="calc-btn" id="openCalcBtn">🧮</button>
+    </div>
+    <div class="section-title">选择类别</div>
+    <div class="category-grid" id="categoryGrid"></div>
+    <div class="section-title">备注</div>
+    <textarea class="note-input" id="noteInput" placeholder="记点什么吧～（可选）" rows="1"></textarea>
+    <div class="section-title">日期</div>
+    <div class="date-row">
+      <span class="label">📅</span>
+      <input type="date" id="dateInput">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="cancelAdd">取消</button>
+      <button class="btn btn-primary" id="saveAdd">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 计算器弹窗 -->
+<div class="modal" id="calcModal">
+  <div class="modal-content" style="max-width:360px;">
+    <div class="modal-handle"></div>
+    <div class="calc-display">
+      <div class="calc-expr" id="calcExpr"></div>
+      <div class="calc-result" id="calcResult">0</div>
+    </div>
+    <div class="calc-keys">
+      <button class="calc-key fn" data-key="C">C</button>
+      <button class="calc-key fn" data-key="back">⌫</button>
+      <button class="calc-key op" data-key="%">%</button>
+      <button class="calc-key op" data-key="÷">÷</button>
+      <button class="calc-key" data-key="7">7</button>
+      <button class="calc-key" data-key="8">8</button>
+      <button class="calc-key" data-key="9">9</button>
+      <button class="calc-key op" data-key="×">×</button>
+      <button class="calc-key" data-key="4">4</button>
+      <button class="calc-key" data-key="5">5</button>
+      <button class="calc-key" data-key="6">6</button>
+      <button class="calc-key op" data-key="−">−</button>
+      <button class="calc-key" data-key="1">1</button>
+      <button class="calc-key" data-key="2">2</button>
+      <button class="calc-key" data-key="3">3</button>
+      <button class="calc-key op" data-key="+">+</button>
+      <button class="calc-key zero" data-key="0">0</button>
+      <button class="calc-key" data-key=".">.</button>
+      <button class="calc-key eq" data-key="=">=</button>
+    </div>
+    <div class="modal-actions" style="margin-top:16px;">
+      <button class="btn btn-secondary" id="calcCancel">取消</button>
+      <button class="btn btn-primary" id="calcConfirm">填入金额</button>
+    </div>
+  </div>
+</div>
+
+<!-- 收支明细弹窗 -->
+<div class="modal" id="detailModal">
+  <div class="modal-content">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="detailTitle">支出明细</div>
+    <div class="detail-tabs">
+      <button class="detail-tab active expense" data-dtype="expense">支出</button>
+      <button class="detail-tab income" data-dtype="income">收入</button>
+    </div>
+    <div class="detail-total" id="detailTotalBox">
+      <div class="k" id="detailTotalLabel">总支出</div>
+      <div class="v" id="detailTotal">¥0</div>
+    </div>
+    <div class="detail-chart" id="detailChart"></div>
+    <div class="detail-legend" id="detailLegend"></div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="detailClose" style="flex:1;">关闭</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<input type="file" id="backupFileInput" accept=".json" style="display:none;">
+
+<script>
+(function(){
+'use strict';
+
+var STORAGE_KEY = 'mycost-v6';
+var CLOUD_CFG_KEY = 'mycost-cloud-v1';
+
+var CATEGORIES = {
+  expense: [
+    { id:'food', name:'餐饮', emoji:'🍰', bg:'#FFF0F5', chartColor:'#FFB5C8' },
+    { id:'trans', name:'交通', emoji:'🚌', bg:'#EAF3FA', chartColor:'#B5D8F0' },
+    { id:'pet', name:'宠物', emoji:'🐾', bg:'#FFF6E6', chartColor:'#FFD9A8' },
+    { id:'cloth', name:'服饰', emoji:'👗', bg:'#F2EAF8', chartColor:'#D8B8E8' },
+    { id:'beauty', name:'美妆', emoji:'💄', bg:'#FFF0F5', chartColor:'#FFC8D5' },
+    { id:'gift', name:'礼物', emoji:'🎁', bg:'#FFEBF1', chartColor:'#F5A8C5' },
+    { id:'daily', name:'日用', emoji:'🧴', bg:'#EBF7EE', chartColor:'#B8E0C8' },
+    { id:'fun', name:'娱乐', emoji:'🎮', bg:'#E8F4F8', chartColor:'#A8D8E8' },
+    { id:'health', name:'医疗', emoji:'💊', bg:'#FFF3E8', chartColor:'#FFC8A8' },
+    { id:'study', name:'学习', emoji:'📚', bg:'#EDF0FA', chartColor:'#A8B8E8' },
+    { id:'home', name:'居家', emoji:'🏠', bg:'#FFF8E6', chartColor:'#FFDCA8' },
+    { id:'other', name:'其他', emoji:'✨', bg:'#F2EFF8', chartColor:'#D8D0E8' }
+  ],
+  income: [
+    { id:'salary', name:'工资', emoji:'💰', bg:'#FFF6E6', chartColor:'#B8E0C8' },
+    { id:'bonus', name:'奖金', emoji:'🎉', bg:'#FFF0F5', chartColor:'#A8DBC8' },
+    { id:'redpack', name:'红包', emoji:'🧧', bg:'#FFEBF1', chartColor:'#C8E8C8' },
+    { id:'refund', name:'退款', emoji:'💸', bg:'#EAF3FA', chartColor:'#B5D8D8' },
+    { id:'side', name:'兼职', emoji:'💼', bg:'#EBF7EE', chartColor:'#98D8B8' },
+    { id:'invest', name:'理财', emoji:'📈', bg:'#EDF0FA', chartColor:'#A8C8E8' },
+    { id:'gift_in', name:'礼金', emoji:'🎀', bg:'#FFF0F5', chartColor:'#FFC8D5' },
+    { id:'other_in', name:'其他', emoji:'✨', bg:'#F2EFF8', chartColor:'#D8D0E8' }
+  ]
+};
+
+var WEEKDAYS = ['日','一','二','三','四','五','六'];
+var LONG_PRESS_MS = 600;
+var MOVE_THRESHOLD = 12;
+
+var state = {
+  transactions: [], view: 'month', focusDate: new Date(),
+  currentType: 'expense', selectedCategory: null, calcExpr: '',
+  savingGoal: { name:'存钱目标', amount: 10000 }, detailType: 'expense'
+};
+
+function saveState(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ transactions: state.transactions, savingGoal: state.savingGoal }));
+    if(typeof scheduleCloudSync === 'function') scheduleCloudSync();
+  }catch(e){ console.error('保存失败', e); }
+}
+function loadState(){
+  try{
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return;
+    var data = JSON.parse(raw);
+    state.transactions = data.transactions || [];
+    if(data.savingGoal) state.savingGoal = data.savingGoal;
+  }catch(e){ console.error('读取失败', e); }
+}
+
+function pad2(n){ return String(n).padStart(2,'0'); }
+function formatDate(d){ return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate()); }
+function formatCurrency(n){
+  var num = Number(n) || 0, s = num.toFixed(2), parts = s.split('.');
+  return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '.' + parts[1];
+}
+function formatShort(n){
+  var num = Number(n) || 0;
+  if(num >= 10000) return (num/10000).toFixed(1) + 'w';
+  if(num >= 1000) return (num/1000).toFixed(1) + 'k';
+  return Math.round(num).toString();
+}
+function formatCal(n){
+  var num = Number(n) || 0;
+  if(num >= 10000) return (num/10000).toFixed(1) + 'w';
+  if(num >= 1000) return (num/1000).toFixed(1) + 'k';
+  return Math.round(num).toString();
+}
+function getCategoryById(type, id){
+  var list = CATEGORIES[type];
+  for(var i=0;i<list.length;i++){ if(list[i].id===id) return list[i]; }
+  return list[list.length-1];
+}
+function isSameDay(d1,d2){ return d1.getFullYear()===d2.getFullYear() && d1.getMonth()===d2.getMonth() && d1.getDate()===d2.getDate(); }
+function escapeHtml(str){ return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;'); }
+
+function getSavings(){
+  var total = 0;
+  for(var i=0;i<state.transactions.length;i++){
+    var t = state.transactions[i];
+    total += (t.type==='income'? 1 : -1) * t.amount;
+  }
+  return total;
+}
+function getDayTotal(date, type){
+  var key = formatDate(date), sum = 0;
+  for(var i=0;i<state.transactions.length;i++){
+    var t = state.transactions[i];
+    if(t.date===key && t.type===type) sum += t.amount;
+  }
+  return sum;
+}
+function getDayTransactions(date){
+  var key = formatDate(date);
+  return state.transactions.filter(function(t){ return t.date===key; })
+    .sort(function(a,b){ return (b.createdAt||0)-(a.createdAt||0); });
+}
+function getMonthTotal(year, month, type){
+  var sum = 0, prefix = year+'-'+pad2(month+1);
+  for(var i=0;i<state.transactions.length;i++){
+    var t = state.transactions[i];
+    if(t.date.indexOf(prefix)===0 && t.type===type) sum += t.amount;
+  }
+  return sum;
+}
+
+function renderHeader(){
+  document.getElementById('savingsAmount').textContent = formatCurrency(getSavings());
+  var goal = state.savingGoal;
+  document.getElementById('goalName').textContent = goal.name;
+  var progress = goal.amount > 0 ? Math.max(0, Math.min(1, getSavings()/goal.amount)) : 0;
+  document.getElementById('goalProgress').textContent = '¥'+formatShort(getSavings())+' / ¥'+formatShort(goal.amount);
+  document.getElementById('goalFill').style.width = (progress*100)+'%';
+  var now = state.focusDate;
+  document.getElementById('monthIncome').textContent = '¥'+formatShort(getMonthTotal(now.getFullYear(), now.getMonth(), 'income'));
+  document.getElementById('monthExpense').textContent = '¥'+formatShort(getMonthTotal(now.getFullYear(), now.getMonth(), 'expense'));
+}
+
+function render(){
+  renderHeader(); renderNavTitle();
+  var main = document.getElementById('mainArea');
+  main.innerHTML = '';
+  if(state.view==='day') renderDay(main);
+  else if(state.view==='month') renderMonth(main);
+  else renderYear(main);
+  document.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.classList.toggle('active', btn.dataset.view===state.view);
+  });
+  main.scrollTop = 0;
+}
+
+function renderNavTitle(){
+  var d = state.focusDate, t = document.getElementById('navTitle');
+  if(state.view==='day') t.textContent = d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日 周'+WEEKDAYS[d.getDay()];
+  else if(state.view==='month') t.textContent = d.getFullYear()+'年'+(d.getMonth()+1)+'月';
+  else t.textContent = d.getFullYear()+'年';
+}
+
+function renderDay(container){
+  var d = state.focusDate;
+  var dayIncome = getDayTotal(d,'income'), dayExpense = getDayTotal(d,'expense');
+  var summary = document.createElement('div');
+  summary.className = 'day-summary';
+  summary.innerHTML = '<div class="day-summary-item"><div class="k">收入</div><div class="v income">+¥'+formatShort(dayIncome)+'</div></div><div class="day-summary-item"><div class="k">支出</div><div class="v expense">-¥'+formatShort(dayExpense)+'</div></div>';
+  container.appendChild(summary);
+  var list = getDayTransactions(d);
+  if(list.length>0){
+    var hint = document.createElement('div');
+    hint.className = 'press-hint';
+    hint.innerHTML = '<span class="dot"></span><span>长按记录可删除</span><span class="dot"></span>';
+    container.appendChild(hint);
+  }
+  if(list.length===0){
+    var empty = document.createElement('div');
+    empty.className = 'empty-state';
+    empty.innerHTML = '<span class="emoji">· · ·</span><div class="text">今天还没有记账哦<br>点击右下角 + 记录第一笔吧～</div>';
+    container.appendChild(empty); return;
+  }
+  var txList = document.createElement('div');
+  txList.className = 'tx-list';
+  list.forEach(function(t){
+    var cat = getCategoryById(t.type, t.category);
+    var item = document.createElement('div');
+    item.className = 'tx-item';
+    var sign = t.type==='income'?'+':'-', cls = t.type==='income'?'income':'expense';
+    item.innerHTML = '<div class="tx-emoji" style="background:'+cat.bg+'">'+cat.emoji+'</div><div class="tx-info"><div class="tx-name">'+cat.name+'</div>'+(t.note?'<div class="tx-note">'+escapeHtml(t.note)+'</div>':'')+'</div><div class="tx-amount '+cls+'">'+sign+'¥'+formatCurrency(t.amount)+'</div>';
+    attachLongPress(item, function(){ deleteTransaction(t.id); });
+    txList.appendChild(item);
+  });
+  container.appendChild(txList);
+}
+
+function attachLongPress(el, onTrigger){
+  var timer = null, startX = 0, startY = 0, triggered = false;
+  function start(x,y){ startX=x; startY=y; triggered=false; clearTimeout(timer); el.classList.add('pressing');
+    timer = setTimeout(function(){ triggered=true; if(navigator.vibrate){ try{navigator.vibrate(30);}catch(e){} } onTrigger(); }, LONG_PRESS_MS); }
+  function cancel(){ clearTimeout(timer); el.classList.remove('pressing'); }
+  function moved(x,y){ if(Math.sqrt((x-startX)*(x-startX)+(y-startY)*(y-startY))>MOVE_THRESHOLD) cancel(); }
+  el.addEventListener('touchstart',function(e){ var t=e.touches[0]; start(t.clientX,t.clientY); },{passive:true});
+  el.addEventListener('touchmove',function(e){ var t=e.touches[0]; moved(t.clientX,t.clientY); },{passive:true});
+  el.addEventListener('touchend',cancel); el.addEventListener('touchcancel',cancel);
+  el.addEventListener('mousedown',function(e){ if(e.button!==0) return; start(e.clientX,e.clientY); });
+  el.addEventListener('mousemove',function(e){ if(timer) moved(e.clientX,e.clientY); });
+  el.addEventListener('mouseup',cancel); el.addEventListener('mouseleave',cancel);
+  el.addEventListener('contextmenu',function(e){ if(triggered||timer) e.preventDefault(); });
+}
+
+function renderMonth(container){
+  var d = state.focusDate, year = d.getFullYear(), month = d.getMonth();
+  var monthIn = getMonthTotal(year,month,'income'), monthEx = getMonthTotal(year,month,'expense');
+  var ms = document.createElement('div');
+  ms.className = 'month-summary-top';
+  ms.innerHTML = '<div class="item income-item"><div class="k">本月收入</div><div class="v income '+(monthIn>0?'':'empty')+'">'+(monthIn>0?'+¥'+formatShort(monthIn):'—')+'</div></div><div class="item expense-item"><div class="k">本月支出</div><div class="v expense '+(monthEx>0?'':'empty')+'">'+(monthEx>0?'-¥'+formatShort(monthEx):'—')+'</div></div>';
+  container.appendChild(ms);
+  var firstDay = new Date(year, month, 1), lastDay = new Date(year, month+1, 0);
+  var daysInMonth = lastDay.getDate(), startWeekday = firstDay.getDay();
+  var cal = document.createElement('div'); cal.className = 'calendar';
+  var wd = document.createElement('div'); wd.className = 'calendar-weekdays';
+  WEEKDAYS.forEach(function(w,i){ var el=document.createElement('div'); el.className='wd'+(i===0?' sun':i===6?' sat':''); el.textContent=w; wd.appendChild(el); });
+  cal.appendChild(wd);
+  var grid = document.createElement('div'); grid.className = 'calendar-days';
+  var prevLast = new Date(year, month, 0).getDate();
+  for(var i=startWeekday-1;i>=0;i--){ var c=document.createElement('div'); c.className='cal-day other-month'; c.innerHTML='<div class="num">'+(prevLast-i)+'</div>'; grid.appendChild(c); }
+  var today = new Date();
+  for(var day=1; day<=daysInMonth; day++){
+    (function(day){
+      var dateObj = new Date(year, month, day);
+      var income = getDayTotal(dateObj,'income'), expense = getDayTotal(dateObj,'expense');
+      var isToday = isSameDay(dateObj, today);
+      var cell = document.createElement('div'); cell.className='cal-day';
+      if(isToday) cell.classList.add('today');
+      if(income>0||expense>0) cell.classList.add('has-tx');
+      var amts='';
+      if(income>0||expense>0){ amts='<div class="amts">'; if(income>0) amts+='<div class="amt income">+'+formatCal(income)+'</div>'; if(expense>0) amts+='<div class="amt expense">-'+formatCal(expense)+'</div>'; amts+='</div>'; }
+      cell.innerHTML = '<div class="num">'+day+'</div>'+amts;
+      cell.addEventListener('click',function(){ state.focusDate=new Date(dateObj); state.view='day'; render(); });
+      grid.appendChild(cell);
+    })(day);
+  }
+  var totalCells = startWeekday + daysInMonth, remaining = (7-(totalCells%7))%7;
+  for(var j=1;j<=remaining;j++){ var c2=document.createElement('div'); c2.className='cal-day other-month'; c2.innerHTML='<div class="num">'+j+'</div>'; grid.appendChild(c2); }
+  cal.appendChild(grid); container.appendChild(cal);
+}
+
+function renderYear(container){
+  var year = state.focusDate.getFullYear();
+  var toolbar = document.createElement('div'); toolbar.className='year-toolbar';
+  toolbar.innerHTML = '<div class="year-toolbar-title">'+year+' 年 · 月度收支</div><button class="year-detail-btn" id="openDetailBtn"><span class="icon">📊</span><span>收支明细</span></button>';
+  container.appendChild(toolbar);
+  var monthData=[], maxEx=0, yearIn=0, yearEx=0;
+  for(var m=0;m<12;m++){
+    var inc = getMonthTotal(year,m,'income'), ex = getMonthTotal(year,m,'expense');
+    monthData.push({inc:inc, ex:ex}); if(ex>maxEx) maxEx=ex; yearIn+=inc; yearEx+=ex;
+  }
+  var ys = document.createElement('div'); ys.className='year-summary-top';
+  ys.innerHTML = '<div class="item income-item"><div class="k">全年收入</div><div class="v income '+(yearIn>0?'':'empty')+'">'+(yearIn>0?'+¥'+formatShort(yearIn):'—')+'</div></div><div class="item expense-item"><div class="k">全年支出</div><div class="v expense '+(yearEx>0?'':'empty')+'">'+(yearEx>0?'-¥'+formatShort(yearEx):'—')+'</div></div>';
+  container.appendChild(ys);
+  if(yearIn===0 && yearEx===0){
+    var empty=document.createElement('div'); empty.className='year-empty';
+    empty.innerHTML='<span class="emoji">· · ·</span><div class="text">'+year+' 年还没有记录<br>快去记一笔吧～</div>';
+    container.appendChild(empty); bindDetailBtn(); return;
+  }
+  var list = document.createElement('div'); list.className='month-list';
+  var curM = new Date().getMonth(), curY = new Date().getFullYear();
+  for(var k=0;k<12;k++){
+    (function(k){
+      var inc=monthData[k].inc, ex=monthData[k].ex;
+      var isCur = (year===curY && k===curM);
+      var ratio = maxEx>0 ? ex/maxEx : 0;
+      var card = document.createElement('div');
+      card.className = 'month-card-v' + (isCur?' current':'');
+      card.innerHTML = '<div class="mc-head"><div class="mc-month-v">'+(k+1)+'<span class="unit">月</span></div>'+(isCur?'<div class="mc-current-tag">当前</div>':'')+'</div><div class="mc-body-v"><div class="mc-row-v"><span class="mc-label-v">收入</span><span class="mc-value-v income '+(inc>0?'':'empty')+'">'+(inc>0?'+¥'+formatShort(inc):'—')+'</span></div><div class="mc-row-v"><span class="mc-label-v">支出</span><span class="mc-value-v expense '+(ex>0?'':'empty')+'">'+(ex>0?'-¥'+formatShort(ex):'—')+'</span></div><div class="mc-bar-v"><div class="mc-bar-fill-v" style="width:'+(ratio*100)+'%"></div></div></div>';
+      card.addEventListener('click',function(){ state.focusDate=new Date(year,k,1); state.view='month'; render(); });
+      list.appendChild(card);
+    })(k);
+  }
+  container.appendChild(list); bindDetailBtn();
+}
+
+function bindDetailBtn(){
+  var btn = document.getElementById('openDetailBtn');
+  if(btn) btn.addEventListener('click', openDetailModal);
+}
+
+function openDetailModal(){ renderDetailContent(); document.getElementById('detailModal').classList.add('open'); }
+
+function renderDetailContent(){
+  var year = state.focusDate.getFullYear(), type = state.detailType;
+  document.getElementById('detailTitle').textContent = type==='expense' ? year+' 年支出明细' : year+' 年收入明细';
+  var stats = {}, total = 0;
+  for(var i=0;i<state.transactions.length;i++){
+    var t = state.transactions[i];
+    if(t.type!==type) continue;
+    if(t.date.indexOf(year+'-')!==0) continue;
+    if(!stats[t.category]) stats[t.category]=0;
+    stats[t.category]+=t.amount; total+=t.amount;
+  }
+  var box = document.getElementById('detailTotalBox');
+  document.getElementById('detailTotalLabel').textContent = type==='expense'?'总支出':'总收入';
+  document.getElementById('detailTotal').textContent = '¥'+formatShort(total);
+  box.classList.toggle('income', type==='income');
+  var chartEl = document.getElementById('detailChart'), legendEl = document.getElementById('detailLegend');
+  chartEl.innerHTML=''; legendEl.innerHTML='';
+  if(total===0){ chartEl.innerHTML='<div class="detail-empty">该年暂无'+(type==='expense'?'支出':'收入')+'记录</div>'; return; }
+  var list = Object.keys(stats).map(function(cid){ var cat=getCategoryById(type,cid); return {name:cat.name,emoji:cat.emoji,color:cat.chartColor,total:stats[cid],ratio:stats[cid]/total}; }).sort(function(a,b){ return b.total-a.total; });
+  chartEl.innerHTML = buildDonutSVG(list, total, type);
+  list.forEach(function(item){
+    var row = document.createElement('div'); row.className='legend-item';
+    row.innerHTML = '<div class="legend-color" style="background:'+item.color+'"></div><div class="legend-name">'+item.emoji+' '+item.name+'<span class="pct">'+(item.ratio*100).toFixed(1)+'%</span></div><div class="legend-amount '+type+'">¥'+formatShort(item.total)+'</div>';
+    legendEl.appendChild(row);
+  });
+}
+
+document.querySelectorAll('.detail-tab').forEach(function(tab){
+  tab.addEventListener('click',function(){
+    state.detailType = tab.dataset.dtype;
+    document.querySelectorAll('.detail-tab').forEach(function(t){ t.classList.toggle('active', t.dataset.dtype===state.detailType); });
+    renderDetailContent();
+  });
+});
+document.getElementById('detailClose').addEventListener('click',function(){ document.getElementById('detailModal').classList.remove('open'); });
+document.getElementById('detailModal').addEventListener('click',function(e){ if(e.target===document.getElementById('detailModal')) document.getElementById('detailModal').classList.remove('open'); });
+
+function buildDonutSVG(list,total,type){
+  var cx=100,cy=100,rO=78,rI=48,angle=-Math.PI/2,paths='';
+  list.forEach(function(item){
+    var ratio=item.ratio; if(ratio<=0) return;
+    var end=angle+ratio*Math.PI*2;
+    if(ratio>=0.9999){ paths+='<circle cx="'+cx+'" cy="'+cy+'" r="'+((rO+rI)/2)+'" fill="none" stroke="'+item.color+'" stroke-width="'+(rO-rI)+'"/>'; angle=end; return; }
+    var x1o=cx+rO*Math.cos(angle),y1o=cy+rO*Math.sin(angle);
+    var x2o=cx+rO*Math.cos(end),y2o=cy+rO*Math.sin(end);
+    var x1i=cx+rI*Math.cos(end),y1i=cy+rI*Math.sin(end);
+    var x2i=cx+rI*Math.cos(angle),y2i=cy+rI*Math.sin(angle);
+    var large=ratio>0.5?1:0;
+    paths+='<path d="M '+x1o+' '+y1o+' A '+rO+' '+rO+' 0 '+large+' 1 '+x2o+' '+y2o+' L '+x1i+' '+y1i+' A '+rI+' '+rI+' 0 '+large+' 0 '+x2i+' '+y2i+' Z" fill="'+item.color+'" stroke="#fff" stroke-width="1.5"/>';
+    angle=end;
+  });
+  var label = type==='expense'?'总支出':'总收入';
+  var center = '<text x="'+cx+'" y="'+(cy-6)+'" text-anchor="middle" font-size="10" fill="#9A8A90" font-family="Quicksand, sans-serif" font-weight="600" letter-spacing="1">'+label+'</text><text x="'+cx+'" y="'+(cy+14)+'" text-anchor="middle" font-size="18" fill="#5A4A50" font-family="\'ZCOOL KuaiLe\', Quicksand, sans-serif" font-weight="700">¥'+formatShort(total)+'</text>';
+  return '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">'+paths+center+'</svg>';
+}
+
+document.getElementById('savingsCard').addEventListener('click',function(){
+  document.getElementById('goalNameInput').value = state.savingGoal.name || '';
+  document.getElementById('goalAmountInput').value = state.savingGoal.amount || '';
+  document.getElementById('goalModal').classList.add('open');
+  setTimeout(function(){ document.getElementById('goalAmountInput').focus(); },250);
+});
+document.getElementById('goalCancel').addEventListener('click',function(){ document.getElementById('goalModal').classList.remove('open'); });
+document.getElementById('goalSave').addEventListener('click',function(){
+  var name = document.getElementById('goalNameInput').value.trim() || '存钱目标';
+  var amount = parseFloat(document.getElementById('goalAmountInput').value);
+  if(!amount || amount<=0){ showToast('请输入有效的目标金额哦～'); return; }
+  state.savingGoal.name = name; state.savingGoal.amount = Math.round(amount*100)/100;
+  saveState(); renderHeader(); document.getElementById('goalModal').classList.remove('open');
+  showToast('存钱目标已更新 🎯');
+});
+document.getElementById('goalModal').addEventListener('click',function(e){ if(e.target===document.getElementById('goalModal')) document.getElementById('goalModal').classList.remove('open'); });
+document.getElementById('goalAmountInput').addEventListener('input',function(){
+  this.value = this.value.replace(/[^\d.]/g,'').replace(/(\..*)\./g,'$1');
+});
+
+function openAddModal(){
+  document.getElementById('addModal').classList.add('open');
+  document.getElementById('amountInput').value='';
+  document.getElementById('noteInput').value='';
+  document.getElementById('dateInput').value=formatDate(state.focusDate);
+  state.currentType='expense'; state.selectedCategory=null;
+  renderTypeTabs(); renderCategories();
+  setTimeout(function(){ document.getElementById('amountInput').focus(); },250);
+}
+document.getElementById('fabAdd').addEventListener('click',openAddModal);
+document.getElementById('cancelAdd').addEventListener('click',function(){ document.getElementById('addModal').classList.remove('open'); });
+document.getElementById('addModal').addEventListener('click',function(e){ if(e.target===document.getElementById('addModal')) document.getElementById('addModal').classList.remove('open'); });
+
+function renderTypeTabs(){
+  document.querySelectorAll('.type-tab').forEach(function(btn){ btn.classList.toggle('active', btn.dataset.type===state.currentType); });
+}
+function renderCategories(){
+  var grid = document.getElementById('categoryGrid'); grid.innerHTML='';
+  CATEGORIES[state.currentType].forEach(function(c){
+    var el = document.createElement('div');
+    el.className = 'cat-item' + (state.selectedCategory===c.id?' selected':'');
+    el.innerHTML = '<div class="cat-emoji">'+c.emoji+'</div><div class="cat-name">'+c.name+'</div>';
+    el.addEventListener('click',function(){ state.selectedCategory=c.id; renderCategories(); });
+    grid.appendChild(el);
+  });
+}
+document.querySelectorAll('.type-tab').forEach(function(btn){
+  btn.addEventListener('click',function(){ state.currentType = btn.dataset.type; state.selectedCategory=null; renderTypeTabs(); renderCategories(); });
+});
+
+document.getElementById('saveAdd').addEventListener('click',function(){
+  var amount = parseFloat(document.getElementById('amountInput').value);
+  if(!amount || amount<=0){ showToast('请输入金额哦～'); return; }
+  if(!state.selectedCategory){ showToast('选择一个类别吧'); return; }
+  var dateVal = document.getElementById('dateInput').value || formatDate(new Date());
+  var tx = { id:'tx_'+Date.now()+'_'+Math.random().toString(36).slice(2,7), type:state.currentType,
+    amount:Math.round(amount*100)/100, category:state.selectedCategory,
+    note:document.getElementById('noteInput').value.trim(), date:dateVal, createdAt:Date.now() };
+  state.transactions.push(tx);
+  var parts = dateVal.split('-').map(Number);
+  state.focusDate = new Date(parts[0],parts[1]-1,parts[2]);
+  saveState();
+  document.getElementById('addModal').classList.remove('open');
+  render();
+  showToast(state.currentType==='expense'?'记下一笔支出啦 💸':'记下一笔收入啦 💰');
+});
+document.getElementById('amountInput').addEventListener('input',function(){
+  this.value = this.value.replace(/[^\d.]/g,'').replace(/(\..*)\./g,'$1');
+});
+
+function openCalc(){ state.calcExpr=''; updateCalcDisplay(); document.getElementById('calcModal').classList.add('open'); }
+function updateCalcDisplay(){
+  var expr = state.calcExpr || '';
+  document.getElementById('calcExpr').textContent = expr;
+  if(!expr){ document.getElementById('calcResult').textContent='0'; return; }
+  var r = safeEval(expr);
+  document.getElementById('calcResult').textContent = r!==null ? formatCalcNumber(r) : '…';
+}
+function formatCalcNumber(n){ if(!isFinite(n)) return '…'; if(Number.isInteger(n)) return n.toString(); return parseFloat(n.toFixed(8)).toString(); }
+function safeEval(expr){
+  var cleaned = expr.replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-').replace(/%/g,'/100');
+  if(!/^[\d+\-*/.() ]+$/.test(cleaned)) return null;
+  try{ var r = Function('"use strict"; return ('+cleaned+')')(); if(typeof r!=='number'||!isFinite(r)) return null; return r; }catch(e){ return null; }
+}
+document.querySelectorAll('.calc-key').forEach(function(key){
+  key.addEventListener('click',function(){
+    var k = key.dataset.key;
+    if(k==='C') state.calcExpr='';
+    else if(k==='back') state.calcExpr = state.calcExpr.slice(0,-1);
+    else if(k==='='){ var r=safeEval(state.calcExpr); if(r!==null) state.calcExpr=formatCalcNumber(r); }
+    else state.calcExpr += k;
+    updateCalcDisplay();
+  });
+});
+document.getElementById('openCalcBtn').addEventListener('click',openCalc);
+document.getElementById('calcCancel').addEventListener('click',function(){ document.getElementById('calcModal').classList.remove('open'); });
+document.getElementById('calcConfirm').addEventListener('click',function(){
+  var r = safeEval(state.calcExpr);
+  if(r!==null){ document.getElementById('amountInput').value = Math.round(r*100)/100; document.getElementById('calcModal').classList.remove('open'); }
+  else showToast('算式还不完整哦～');
+});
+document.getElementById('calcModal').addEventListener('click',function(e){ if(e.target===document.getElementById('calcModal')) document.getElementById('calcModal').classList.remove('open'); });
+
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){ state.view = btn.dataset.view; render(); });
+});
+document.getElementById('navPrev').addEventListener('click',function(){
+  var d = new Date(state.focusDate);
+  if(state.view==='day') d.setDate(d.getDate()-1);
+  else if(state.view==='month') d.setMonth(d.getMonth()-1);
+  else d.setFullYear(d.getFullYear()-1);
+  state.focusDate = d; render();
+});
+document.getElementById('navNext').addEventListener('click',function(){
+  var d = new Date(state.focusDate);
+  if(state.view==='day') d.setDate(d.getDate()+1);
+  else if(state.view==='month') d.setMonth(d.getMonth()+1);
+  else d.setFullYear(d.getFullYear()+1);
+  state.focusDate = d; render();
+});
+
+function deleteTransaction(id){
+  if(!confirm('确定要删除这笔记录吗？')) return;
+  state.transactions = state.transactions.filter(function(t){ return t.id!==id; });
+  saveState(); render(); showToast('已删除');
+}
+
+function getCloudConfig(){
+  try{ var raw = localStorage.getItem(CLOUD_CFG_KEY); return raw ? JSON.parse(raw) : {binId:'',binKey:''}; }
+  catch(e){ return {binId:'',binKey:''}; }
+}
+function setCloudConfig(cfg){ try{ localStorage.setItem(CLOUD_CFG_KEY, JSON.stringify(cfg)); }catch(e){} }
+function setCloudStatus(text, color){
+  var el = document.getElementById('cloudStatus');
+  if(el){ el.textContent = text; el.style.color = color || 'var(--text-3)'; }
+}
+
+var cloudSyncTimer = null, cloudSyncing = false;
+
+function pushToCloud(silent){
+  var cfg = getCloudConfig();
+  if(!cfg.binId || !cfg.binKey){ if(!silent) showToast('请先设置 Bin ID 和 Key'); return Promise.resolve(false); }
+  if(cloudSyncing) return Promise.resolve(false);
+  cloudSyncing = true;
+  var payload = { version:6, updatedAt:new Date().toISOString(), transactions:state.transactions, savingGoal:state.savingGoal };
+  return fetch('https://api.jsonbin.io/v3/b/'+cfg.binId, {
+    method:'PUT', headers:{ 'Content-Type':'application/json', 'X-Master-Key':cfg.binKey },
+    body: JSON.stringify(payload)
+  }).then(function(res){
+    if(!res.ok){ setCloudStatus('云同步失败，请检查配置','#E57373'); if(!silent) showToast('云同步失败'); cloudSyncing=false; return false; }
+    var now = new Date(), t = pad2(now.getHours())+':'+pad2(now.getMinutes());
+    setCloudStatus('☁️ 已同步 '+t, 'var(--green-soft)'); cloudSyncing = false; return true;
+  }).catch(function(err){
+    console.error(err);
+    setCloudStatus('云同步失败（网络问题）','#E57373');
+    if(!silent) showToast('网络异常，稍后自动重试');
+    cloudSyncing = false; return false;
+  });
+}
+
+function pullFromCloud(){
+  var cfg = getCloudConfig();
+  if(!cfg.binId || !cfg.binKey){ showToast('请先填写 Bin ID 和 Key'); return; }
+  setCloudStatus('正在从云端读取…','var(--pink-6)');
+  fetch('https://api.jsonbin.io/v3/b/'+cfg.binId+'/latest', { headers:{ 'X-Master-Key':cfg.binKey } })
+    .then(function(res){ if(!res.ok){ setCloudStatus('读取失败','#E57373'); showToast('读取云端失败'); return null; } return res.json(); })
+    .then(function(data){
+      if(!data || !data.record) return;
+      var record = data.record;
+      if(!record.transactions || !Array.isArray(record.transactions)){ setCloudStatus('云端暂无数据','var(--text-3)'); showToast('云端没有数据'); return; }
+      var count = record.transactions.length;
+      if(!confirm('云端有 '+count+' 条记录，将覆盖本地。继续？')){ setCloudStatus('已取消恢复','var(--text-3)'); return; }
+      state.transactions = record.transactions;
+      if(record.savingGoal) state.savingGoal = record.savingGoal;
+      saveState(); render();
+      var now = new Date(), t = pad2(now.getHours())+':'+pad2(now.getMinutes());
+      setCloudStatus('☁️ 已恢复 '+count+' 条 · '+t, 'var(--green-soft)');
+      showToast('已从云端恢复 '+count+' 条记录 ✅');
+    }).catch(function(err){ console.error(err); setCloudStatus('读取异常','#E57373'); showToast('读取失败'); });
+}
+
+function scheduleCloudSync(){
+  var cfg = getCloudConfig();
+  if(!cfg.binId || !cfg.binKey) return;
+  clearTimeout(cloudSyncTimer);
+  setCloudStatus('⏳ 即将同步…','var(--text-3)');
+  cloudSyncTimer = setTimeout(function(){ pushToCloud(true); }, 2000);
+}
+
+document.getElementById('cloudBtn').addEventListener('click',function(e){
+  e.stopPropagation();
+  var cfg = getCloudConfig();
+  document.getElementById('binIdInput').value = cfg.binId || '';
+  document.getElementById('binKeyInput').value = cfg.binKey || '';
+  document.getElementById('cloudModal').classList.add('open');
+  setCloudStatus(cfg.binId ? '☁️ 已开启' : '未开启云同步', cfg.binId ? 'var(--green-soft)' : 'var(--text-3)');
+});
+document.getElementById('cloudSave').addEventListener('click',function(){
+  var binId = document.getElementById('binIdInput').value.trim();
+  var binKey = document.getElementById('binKeyInput').value.trim();
+  if(!binId || !binKey){ showToast('Bin ID 和 Key 都要填哦'); return; }
+  setCloudConfig({binId:binId, binKey:binKey});
+  setCloudStatus('☁️ 已开启，正在首次同步…','var(--green-soft)');
+  pushToCloud(false);
+  setTimeout(function(){ document.getElementById('cloudModal').classList.remove('open'); }, 1500);
+});
+document.getElementById('cloudRestore').addEventListener('click',pullFromCloud);
+document.getElementById('cloudCancel').addEventListener('click',function(){ document.getElementById('cloudModal').classList.remove('open'); });
+document.getElementById('cloudModal').addEventListener('click',function(e){ if(e.target===document.getElementById('cloudModal')) document.getElementById('cloudModal').classList.remove('open'); });
+
+document.getElementById('exportBtn').addEventListener('click',function(e){
+  e.stopPropagation();
+  var data = { version:6, exportedAt:new Date().toISOString(), transactions:state.transactions, savingGoal:state.savingGoal };
+  var blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'MyCost备份_'+new Date().toISOString().slice(0,10)+'.json';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(url); },1000);
+  showToast('已导出备份文件 ☁️');
+});
+document.getElementById('importBtn').addEventListener('click',function(e){
+  e.stopPropagation();
+  document.getElementById('backupFileInput').click();
+});
+document.getElementById('backupFileInput').addEventListener('change',function(e){
+  var file = e.target.files[0]; if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(ev){
+    try{
+      var data = JSON.parse(ev.target.result);
+      if(!data.transactions || !Array.isArray(data.transactions)){ showToast('备份文件格式不对'); return; }
+      var count = data.transactions.length;
+      if(!confirm('即将导入 '+count+' 条记录，将覆盖本地。继续？')) return;
+      state.transactions = data.transactions;
+      if(data.savingGoal) state.savingGoal = data.savingGoal;
+      saveState(); render(); showToast('已恢复 '+count+' 条记录 ✅');
+    }catch(err){ console.error(err); showToast('文件读取失败'); }
+  };
+  reader.readAsText(file); e.target.value='';
+});
+
+var toastTimer = null;
+function showToast(msg){
+  var el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ el.classList.remove('show'); },1800);
+}
+
+loadState();
+render();
+
+(function initCloud(){
+  var cfg = getCloudConfig();
+  if(!cfg.binId || !cfg.binKey) return;
+  setCloudStatus('☁️ 已开启','var(--green-soft)');
+  setTimeout(function(){
+    fetch('https://api.jsonbin.io/v3/b/'+cfg.binId+'/latest', {headers:{'X-Master-Key':cfg.binKey}})
+      .then(function(res){ return res.ok ? res.json() : null; })
+      .then(function(data){
+        if(!data || !data.record) return;
+        var remote = data.record;
+        if(!remote.transactions) return;
+        var remoteCount = remote.transactions.length;
+        var remoteTime = remote.updatedAt ? new Date(remote.updatedAt).getTime() : 0;
+        var localTime = parseInt(localStorage.getItem('mycost-last')||'0',10);
+        if(remoteTime > localTime && remoteCount > 0){
+          if(confirm('云端有 '+remoteCount+' 条记录（比本地新），是否用云端覆盖本地？')){
+            state.transactions = remote.transactions;
+            if(remote.savingGoal) state.savingGoal = remote.savingGoal;
+            saveState(); render(); showToast('已同步云端数据 ✅');
+          }
+        }
+      }).catch(function(err){ console.error('自动拉取失败',err); });
+  },1000);
+})();
+
+window.addEventListener('beforeunload',function(){
+  localStorage.setItem('mycost-last', String(Date.now()));
+});
+
+})();
+</script>
+</body>
+</html>
